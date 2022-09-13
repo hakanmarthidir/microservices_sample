@@ -33,8 +33,6 @@
     <None Remove="Domain\" />
     <None Remove="Application\" />
     <None Remove="Infrastructure\" />
-    <None Remove="Domain\Aggregates\" />
-    <None Remove="Domain\Aggregates\BookAggregate\" />
     <None Remove="Ardalis.GuardClauses" />
     <None Remove="Microsoft.EntityFrameworkCore.Relational" />
     <None Remove="Microsoft.EntityFrameworkCore" />
@@ -43,7 +41,6 @@
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer.Design" />
     <None Remove="Infrastructure\Persistence\" />
-    <None Remove="Domain\Aggregates\BookAggregate\Interfaces\" />
     <None Remove="Application\Book\" />
     <None Remove="Application\Book\Commands\" />
     <None Remove="Application\Book\Queries\" />
@@ -61,17 +58,14 @@
     <None Remove="Application\Mappers\" />
     <None Remove="AutoMapper" />
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
-    <None Remove="Domain\Aggregates\BookAggregate\Specs\" />
+    <None Remove="Domain\BookAggregate\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Domain\" />
     <Folder Include="Application\" />
     <Folder Include="Infrastructure\" />
-    <Folder Include="Domain\Aggregates\" />
-    <Folder Include="Domain\Aggregates\BookAggregate\" />
     <Folder Include="Infrastructure\Persistence\" />
-    <Folder Include="Domain\Aggregates\BookAggregate\Interfaces\" />
     <Folder Include="Application\Book\" />
     <Folder Include="Application\Book\Commands\" />
     <Folder Include="Application\Book\Queries\" />
@@ -85,7 +79,7 @@
     <Folder Include="Application\Author\Queries\" />
     <Folder Include="Application\Author\Dtos\" />
     <Folder Include="Application\Mappers\" />
-    <Folder Include="Domain\Aggregates\BookAggregate\Specs\" />
+    <Folder Include="Domain\BookAggregate\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">

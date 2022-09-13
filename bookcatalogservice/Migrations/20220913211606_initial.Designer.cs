@@ -24,7 +24,7 @@ namespace bookcatalogservice.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("bookcatalogservice.Domain.Aggregates.BookAggregate.Author", b =>
+            modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Author", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace bookcatalogservice.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("bookcatalogservice.Domain.Aggregates.BookAggregate.Book", b =>
+            modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Book", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace bookcatalogservice.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("bookcatalogservice.Domain.Aggregates.BookAggregate.Genre", b =>
+            modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,15 +90,15 @@ namespace bookcatalogservice.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("bookcatalogservice.Domain.Aggregates.BookAggregate.Book", b =>
+            modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Book", b =>
                 {
-                    b.HasOne("bookcatalogservice.Domain.Aggregates.BookAggregate.Author", "Author")
+                    b.HasOne("bookcatalogservice.Domain.BookAggregate.Author", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("bookcatalogservice.Domain.Aggregates.BookAggregate.Genre", "Genre")
+                    b.HasOne("bookcatalogservice.Domain.BookAggregate.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -109,12 +109,12 @@ namespace bookcatalogservice.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("bookcatalogservice.Domain.Aggregates.BookAggregate.Author", b =>
+            modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Author", b =>
                 {
                     b.Navigation("Books");
                 });
 
-            modelBuilder.Entity("bookcatalogservice.Domain.Aggregates.BookAggregate.Genre", b =>
+            modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Genre", b =>
                 {
                     b.Navigation("Books");
                 });

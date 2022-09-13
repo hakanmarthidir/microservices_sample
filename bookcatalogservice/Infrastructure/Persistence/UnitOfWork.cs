@@ -1,4 +1,4 @@
-﻿using bookcatalogservice.Domain.Aggregates.BookAggregate.Interfaces;
+﻿using bookcatalogservice.Domain.BookAggregate.Interfaces;
 
 namespace bookcatalogservice.Infrastructure.Persistence
 {

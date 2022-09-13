@@ -1,5 +1,5 @@
 ﻿using System;
-using bookcatalogservice.Domain.Aggregates.BookAggregate;
+using bookcatalogservice.Domain.BookAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookcatalogservice.Infrastructure.Persistence

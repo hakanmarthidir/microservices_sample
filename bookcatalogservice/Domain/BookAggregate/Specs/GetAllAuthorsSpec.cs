@@ -1,6 +1,6 @@
 ﻿using sharedkernel;
 
-namespace bookcatalogservice.Domain.Aggregates.BookAggregate.Specs
+namespace bookcatalogservice.Domain.BookAggregate.Specs
 {
     public class GetAllAuthorsSpec : BaseSpec<Author>
     {

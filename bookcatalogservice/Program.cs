@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using bookcatalogservice.Domain.Aggregates.BookAggregate.Interfaces;
+using bookcatalogservice.Domain.BookAggregate.Interfaces;
 using bookcatalogservice.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using MediatR;

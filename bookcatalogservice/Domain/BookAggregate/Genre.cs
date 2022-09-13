@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using sharedkernel;
 
-namespace bookcatalogservice.Domain.Aggregates.BookAggregate
+namespace bookcatalogservice.Domain.BookAggregate
 {
     public class Genre : BaseEntity<int>
     {

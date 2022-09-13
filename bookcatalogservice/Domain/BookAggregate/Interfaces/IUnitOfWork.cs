@@ -1,4 +1,4 @@
-﻿namespace bookcatalogservice.Domain.Aggregates.BookAggregate.Interfaces
+﻿namespace bookcatalogservice.Domain.BookAggregate.Interfaces
 {
     public interface IUnitOfWork
     {

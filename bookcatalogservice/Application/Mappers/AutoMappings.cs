@@ -10,9 +10,9 @@ namespace bookcatalogservice.Application.Mappers
     {
         public AutoMappings()
         {
-            CreateMap<Domain.Aggregates.BookAggregate.Book, BookDto>();
-            CreateMap<Domain.Aggregates.BookAggregate.Genre, GenreDto>();
-            CreateMap<Domain.Aggregates.BookAggregate.Author, AuthorDto>();
+            CreateMap<Domain.BookAggregate.Book, BookDto>();
+            CreateMap<Domain.BookAggregate.Genre, GenreDto>();
+            CreateMap<Domain.BookAggregate.Author, AuthorDto>();
         }
     }
 }

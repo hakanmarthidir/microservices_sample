@@ -1,5 +1,5 @@
 ﻿using System;
-using bookcatalogservice.Domain.Aggregates.BookAggregate.Interfaces;
+using bookcatalogservice.Domain.BookAggregate.Interfaces;
 using MediatR;
 using sharedkernel.Interfaces;
 using sharedkernel.ServiceResponse;
@@ -22,7 +22,7 @@ namespace bookcatalogservice.Application.Author.Commands
 
             public async Task<IServiceResponse> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
             {
-                var author = Domain.Aggregates.BookAggregate.Author.CreateAuthor(request.Name, request.HasNobel);
+                var author = Domain.BookAggregate.Author.CreateAuthor(request.Name, request.HasNobel);
 
                 await this._unitOfWork.AuthorRepository.InsertAsync(author).ConfigureAwait(false);
                 await this._unitOfWork.SaveAsync().ConfigureAwait(false);

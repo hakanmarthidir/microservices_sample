@@ -1,8 +1,8 @@
 ﻿using System;
 using AutoMapper;
 using bookcatalogservice.Application.Author.Dtos;
-using bookcatalogservice.Domain.Aggregates.BookAggregate.Interfaces;
-using bookcatalogservice.Domain.Aggregates.BookAggregate.Specs;
+using bookcatalogservice.Domain.BookAggregate.Interfaces;
+using bookcatalogservice.Domain.BookAggregate.Specs;
 using MediatR;
 using sharedkernel.Interfaces;
 using sharedkernel.ServiceResponse;

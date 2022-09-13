@@ -1,6 +1,6 @@
 ﻿using System;
-using bookcatalogservice.Domain.Aggregates.BookAggregate;
-using bookcatalogservice.Domain.Aggregates.BookAggregate.Interfaces;
+using bookcatalogservice.Domain.BookAggregate;
+using bookcatalogservice.Domain.BookAggregate.Interfaces;
 using sharedkernel;
 
 namespace bookcatalogservice.Infrastructure.Persistence

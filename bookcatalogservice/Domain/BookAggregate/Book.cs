@@ -3,7 +3,7 @@ using Ardalis.GuardClauses;
 using sharedkernel;
 using sharedkernel.Interfaces;
 
-namespace bookcatalogservice.Domain.Aggregates.BookAggregate
+namespace bookcatalogservice.Domain.BookAggregate
 {
     public class Book : BaseEntity<Guid>, IAggregateRoot
     {
