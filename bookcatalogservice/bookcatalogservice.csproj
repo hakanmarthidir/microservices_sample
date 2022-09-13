@@ -1,0 +1,95 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>430797a4-59bc-463e-85fb-6797764b03f2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="Domain\" />
+    <None Remove="Application\" />
+    <None Remove="Infrastructure\" />
+    <None Remove="Domain\Aggregates\" />
+    <None Remove="Domain\Aggregates\BookAggregate\" />
+    <None Remove="Ardalis.GuardClauses" />
+    <None Remove="Microsoft.EntityFrameworkCore.Relational" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="Microsoft.EntityFrameworkCore.Tools" />
+    <None Remove="Microsoft.EntityFrameworkCore.SqlServer.Design" />
+    <None Remove="Infrastructure\Persistence\" />
+    <None Remove="Domain\Aggregates\BookAggregate\Interfaces\" />
+    <None Remove="Application\Book\" />
+    <None Remove="Application\Book\Commands\" />
+    <None Remove="Application\Book\Queries\" />
+    <None Remove="Application\Book\Dtos\" />
+    <None Remove="MediatR" />
+    <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Application\Genre\" />
+    <None Remove="Application\Genre\Commands\" />
+    <None Remove="Application\Genre\Queries\" />
+    <None Remove="Application\Genre\Dtos\" />
+    <None Remove="Application\Author\" />
+    <None Remove="Application\Author\Commands\" />
+    <None Remove="Application\Author\Queries\" />
+    <None Remove="Application\Author\Dtos\" />
+    <None Remove="Application\Mappers\" />
+    <None Remove="AutoMapper" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Domain\Aggregates\BookAggregate\Specs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Application\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Domain\Aggregates\" />
+    <Folder Include="Domain\Aggregates\BookAggregate\" />
+    <Folder Include="Infrastructure\Persistence\" />
+    <Folder Include="Domain\Aggregates\BookAggregate\Interfaces\" />
+    <Folder Include="Application\Book\" />
+    <Folder Include="Application\Book\Commands\" />
+    <Folder Include="Application\Book\Queries\" />
+    <Folder Include="Application\Book\Dtos\" />
+    <Folder Include="Application\Genre\" />
+    <Folder Include="Application\Genre\Commands\" />
+    <Folder Include="Application\Genre\Queries\" />
+    <Folder Include="Application\Genre\Dtos\" />
+    <Folder Include="Application\Author\" />
+    <Folder Include="Application\Author\Commands\" />
+    <Folder Include="Application\Author\Queries\" />
+    <Folder Include="Application\Author\Dtos\" />
+    <Folder Include="Application\Mappers\" />
+    <Folder Include="Domain\Aggregates\BookAggregate\Specs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
