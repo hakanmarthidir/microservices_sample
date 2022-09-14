@@ -1,0 +1,66 @@
+﻿{
+  "Routes": [
+
+    {
+      "UpstreamPathTemplate": "/gateway/book?page={page}&pageSize={pageSize}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/book??page={page}&pageSize={pageSize}",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5062
+        }
+      ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "PeriodTimespan": 10,
+        "Limit": 3
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/author?page={page}&pageSize={pageSize}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/author??page={page}&pageSize={pageSize}",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5062
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 300
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/genre?{url}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/genre?{url}",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5062
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 300
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": true,
+      "QuotaExceededMessage": "Maximum Call Limit!",
+      "HttpStatusCode": 429,
+      "ClientIdHeader": "ClientId"
+    },
+    "BaseUrl": "http://localhost:5273"
+  }
+}

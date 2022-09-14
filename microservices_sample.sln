@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharedkernel", "sharedkerne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelveservice", "shelveservice\shelveservice.csproj", "{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateways", "APIGateways", "{9268F3BC-6257-4509-BFD8-B7BFEAA2E1A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapigateway", "webapigateway\webapigateway.csproj", "{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,9 +46,12 @@ Global
 		{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B12C0650-802F-49EB-89E5-92700E8E75BC} = {BA0BF9A9-3FDC-47E9-A5E8-7FB5761F9569}
-		{877B53BF-C867-40C1-964C-2C51F75022D5} = {BA0BF9A9-3FDC-47E9-A5E8-7FB5761F9569}
+		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2} = {9268F3BC-6257-4509-BFD8-B7BFEAA2E1A5}
 	EndGlobalSection
 EndGlobal
