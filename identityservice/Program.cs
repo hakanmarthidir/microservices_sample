@@ -42,11 +42,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+var authenticationProviderKey = "OcelotGuardKey";
 builder.Services.AddAuthentication(x =>
 {
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x =>
+    x.DefaultAuthenticateScheme = authenticationProviderKey;
+    x.DefaultChallengeScheme = authenticationProviderKey;
+}).AddJwtBearer(authenticationProviderKey, x =>
 {
     x.RequireHttpsMetadata = true;
     x.SaveToken = true;
@@ -57,7 +59,7 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = true,
         ValidAudience = jwtTokenConfig.Audience,
         ValidateIssuerSigningKey = true,
-        RequireExpirationTime = false,
+        RequireExpirationTime = true,
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenConfig.Secret))

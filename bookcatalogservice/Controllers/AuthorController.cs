@@ -3,6 +3,7 @@ using MediatR;
 using bookcatalogservice.Application.Author.Queries;
 using bookcatalogservice.Application.Author.Dtos;
 using bookcatalogservice.Application.Author.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,6 +11,7 @@ namespace bookcatalogservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "AuthorizedClient")]
     public class AuthorController : ControllerBase
     {
         private readonly IMediator _mediator;

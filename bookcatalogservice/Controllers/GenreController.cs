@@ -3,6 +3,7 @@ using MediatR;
 using bookcatalogservice.Application.Genre.Dtos;
 using bookcatalogservice.Application.Genre.Commands;
 using bookcatalogservice.Application.Genre.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,13 +20,14 @@ namespace bookcatalogservice.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AuthorizedClient")]
         [HttpGet]
         public async Task<IActionResult> GetGenres([FromQuery] int page, int pageSize)
         {
             return Ok(await this._mediator.Send(new GetAllGenresQuery() { Page = page, PageSize = pageSize }));
         }
 
-
+        [Authorize(Policy = "AuthorizedClient")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GenreCreateDto model)
         {

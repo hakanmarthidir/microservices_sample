@@ -1,10 +1,35 @@
 ﻿{
   "Routes": [
-
+    {
+      "UpstreamPathTemplate": "/gateway/login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/account/login",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5043
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/signup",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/account/register",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5043
+        }
+      ]
+    },
     {
       "UpstreamPathTemplate": "/gateway/book?page={page}&pageSize={pageSize}",
       "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/book??page={page}&pageSize={pageSize}",
+      "DownstreamPathTemplate": "/api/book?page={page}&pageSize={pageSize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "DownstreamHostAndPorts": [
@@ -19,12 +44,16 @@
         "Period": "10s",
         "PeriodTimespan": 10,
         "Limit": 3
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AllowedScopes": []
       }
     },
     {
       "UpstreamPathTemplate": "/gateway/author?page={page}&pageSize={pageSize}",
       "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/author??page={page}&pageSize={pageSize}",
+      "DownstreamPathTemplate": "/api/author?page={page}&pageSize={pageSize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "DownstreamHostAndPorts": [
@@ -35,6 +64,10 @@
       ],
       "FileCacheOptions": {
         "TtlSeconds": 300
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AllowedScopes": []
       }
     },
     {
@@ -51,6 +84,10 @@
       ],
       "FileCacheOptions": {
         "TtlSeconds": 300
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AllowedScopes": []
       }
     }
   ],
