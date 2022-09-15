@@ -71,6 +71,23 @@
       }
     },
     {
+      "UpstreamPathTemplate": "/gateway/author",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/author",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5062
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AllowedScopes": []
+      }
+    },
+    {
       "UpstreamPathTemplate": "/gateway/genre?{url}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/genre?{url}",
@@ -85,6 +102,23 @@
       "FileCacheOptions": {
         "TtlSeconds": 300
       },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/genre",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/genre",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5062
+        }
+      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotGuardKey",
         "AllowedScopes": []
