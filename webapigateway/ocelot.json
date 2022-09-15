@@ -51,6 +51,23 @@
       }
     },
     {
+      "UpstreamPathTemplate": "/gateway/book",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/book",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5062
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AllowedScopes": []
+      }
+    },
+    {
       "UpstreamPathTemplate": "/gateway/author?page={page}&pageSize={pageSize}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/author?page={page}&pageSize={pageSize}",
