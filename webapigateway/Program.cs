@@ -6,13 +6,12 @@ using webapigateway;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Ocelot.Provider.Consul;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
 
 var jwtTokenConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 builder.Services.AddSingleton(jwtTokenConfig);
@@ -43,7 +42,9 @@ builder.Services.AddAuthentication(x =>
 
 
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Services.AddOcelot(builder.Configuration).AddCacheManager(x => x.WithDictionaryHandle());
+builder.Services.AddOcelot(builder.Configuration)
+    .AddCacheManager(x => x.WithDictionaryHandle())
+    .AddConsul();
 
 var app = builder.Build();
 

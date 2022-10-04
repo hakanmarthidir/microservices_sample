@@ -27,6 +27,8 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
+    <PackageReference Include="Consul" Version="1.6.10.7" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +63,8 @@
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <None Remove="Domain\BookAggregate\" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="Consul" />
+    <None Remove="AspNetCore.HealthChecks.SqlServer" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

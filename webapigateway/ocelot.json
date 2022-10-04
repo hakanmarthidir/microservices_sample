@@ -1,43 +1,31 @@
 ﻿{
   "Routes": [
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "IdentityService",
       "UpstreamPathTemplate": "/gateway/login",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/account/login",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5043
-        }
-      ]
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "IdentityService",
       "UpstreamPathTemplate": "/gateway/signup",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/account/register",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5043
-        }
-      ]
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BookCatalogService",
       "UpstreamPathTemplate": "/gateway/book?page={page}&pageSize={pageSize}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/book?page={page}&pageSize={pageSize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": true,
@@ -51,34 +39,26 @@
       }
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BookCatalogService",
       "UpstreamPathTemplate": "/gateway/book",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/book",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotGuardKey",
         "AllowedScopes": []
       }
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BookCatalogService",
       "UpstreamPathTemplate": "/gateway/author?page={page}&pageSize={pageSize}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/author?page={page}&pageSize={pageSize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
       "FileCacheOptions": {
         "TtlSeconds": 300
       },
@@ -88,34 +68,26 @@
       }
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BookCatalogService",
       "UpstreamPathTemplate": "/gateway/author",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/author",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotGuardKey",
         "AllowedScopes": []
       }
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BookCatalogService",
       "UpstreamPathTemplate": "/gateway/genre?{url}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/genre?{url}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
       "FileCacheOptions": {
         "TtlSeconds": 300
       },
@@ -125,17 +97,13 @@
       }
     },
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BookCatalogService",
       "UpstreamPathTemplate": "/gateway/genre",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/genre",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5062
-        }
-      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotGuardKey",
         "AllowedScopes": []
@@ -148,6 +116,12 @@
       "QuotaExceededMessage": "Maximum Call Limit!",
       "HttpStatusCode": 429,
       "ClientIdHeader": "ClientId"
+    },
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
     },
     "BaseUrl": "http://localhost:5273"
   }
