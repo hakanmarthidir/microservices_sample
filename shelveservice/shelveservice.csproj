@@ -56,4 +56,9 @@
     <Folder Include="Infrastructure\Persistence\" />
     <Folder Include="Application\Mappers\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
