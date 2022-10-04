@@ -8,6 +8,9 @@ using bookcatalogservice;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
+using Consul;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using sharedkernel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +31,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var consulConfig = builder.Configuration.GetSection("ConsulConfig").Get<ConsulServiceInfo>();
 var jwtTokenConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 builder.Services.AddSingleton(jwtTokenConfig);
+builder.Services.AddSingleton(consulConfig);
 
 var authenticationProviderKey = "OcelotGuardKey";
 builder.Services.AddAuthentication(x =>
@@ -62,7 +67,19 @@ builder.Services.AddAuthorization(
     }
     );
 
+builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    AllowCachingResponses = false
+});
+
+
+IHostApplicationLifetime lifetime = app.Lifetime;
+
+app.RegisterConsul(lifetime);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -71,11 +88,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
-

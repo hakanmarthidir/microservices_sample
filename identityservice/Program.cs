@@ -12,6 +12,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using identityservice;
+using Consul;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using identityservice.Infrastructure;
+using sharedkernel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +38,10 @@ builder.Services.AddTransient<IHashService, HashService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddSingleton(typeof(ILogService<>), typeof(LogService<>));
 
+var consulConfig = builder.Configuration.GetSection("ConsulConfig").Get<ConsulServiceInfo>();
 var jwtTokenConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 builder.Services.AddSingleton(jwtTokenConfig);
+builder.Services.AddSingleton(consulConfig);
 
 
 builder.Services.AddControllers();
@@ -75,8 +82,17 @@ builder.Services.AddAuthorization(
     }
     );
 
+builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    AllowCachingResponses = false
+});
+
+IHostApplicationLifetime lifetime = app.Lifetime;
+app.RegisterConsul(lifetime);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -87,8 +103,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
 
