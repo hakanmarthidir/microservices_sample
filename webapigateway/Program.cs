@@ -1,45 +1,14 @@
-﻿using Ocelot;
-using Ocelot.DependencyInjection;
+﻿using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Cache.CacheManager;
-using webapigateway;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Ocelot.Provider.Consul;
+using sharedsecurity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-var jwtTokenConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
-builder.Services.AddSingleton(jwtTokenConfig);
-
-
-var authenticationProviderKey = "OcelotGuardKey";
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = authenticationProviderKey;
-    x.DefaultChallengeScheme = authenticationProviderKey;
-}).AddJwtBearer(authenticationProviderKey, x =>
-{
-    x.RequireHttpsMetadata = true;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidIssuer = jwtTokenConfig.Issuer,
-        ValidateAudience = true,
-        ValidAudience = jwtTokenConfig.Audience,
-        ValidateIssuerSigningKey = true,
-        RequireExpirationTime = true,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenConfig.Secret))
-    };
-});
-
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services.AddOcelot(builder.Configuration)
@@ -48,12 +17,10 @@ builder.Services.AddOcelot(builder.Configuration)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions 
 {
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
-}
+     AllowCachingResponses= false
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

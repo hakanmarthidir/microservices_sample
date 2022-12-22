@@ -9,6 +9,7 @@ using identityservice.Infrastructure.Security;
 using Microsoft.Extensions.Options;
 using sharedkernel.Interfaces;
 using sharedkernel.ServiceResponse;
+using sharedsecurity;
 
 namespace identityservice.Application.Services
 {

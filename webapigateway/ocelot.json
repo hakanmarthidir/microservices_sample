@@ -3,21 +3,12 @@
     {
       "UseServiceDiscovery": true,
       "ServiceName": "IdentityService",
-      "UpstreamPathTemplate": "/gateway/login",
+      "UpstreamPathTemplate": "/gateway/{requestname}",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/account/login",
+      "DownstreamPathTemplate": "/api/account/{requestname}",
       "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "IdentityService",
-      "UpstreamPathTemplate": "/gateway/signup",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/account/register",
-      "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
-    },
+      "RouteIsCaseSensitive": false
+    }, 
     {
       "UseServiceDiscovery": true,
       "ServiceName": "BookCatalogService",

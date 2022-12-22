@@ -3,7 +3,7 @@ using Ardalis.GuardClauses;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace identityservice.Infrastructure.Security
+namespace sharedsecurity
 {
     public class HashService : IHashService
     {

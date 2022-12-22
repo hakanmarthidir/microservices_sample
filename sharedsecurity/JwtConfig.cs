@@ -1,4 +1,5 @@
-﻿namespace identityservice.Infrastructure.Security
+﻿using System;
+namespace sharedsecurity
 {
     public class JwtConfig
     {

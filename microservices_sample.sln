@@ -1,31 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "identityservice", "identityservice\identityservice.csproj", "{B12C0650-802F-49EB-89E5-92700E8E75BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "identityservice", "identityservice\identityservice.csproj", "{B12C0650-802F-49EB-89E5-92700E8E75BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "notificationservice", "notificationservice\notificationservice.csproj", "{877B53BF-C867-40C1-964C-2C51F75022D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notificationservice", "notificationservice\notificationservice.csproj", "{877B53BF-C867-40C1-964C-2C51F75022D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookcatalogservice", "bookcatalogservice\bookcatalogservice.csproj", "{47AF55C2-D5A9-49C9-8F13-1A450BAB5444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookcatalogservice", "bookcatalogservice\bookcatalogservice.csproj", "{47AF55C2-D5A9-49C9-8F13-1A450BAB5444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharedkernel", "sharedkernel\sharedkernel.csproj", "{04969522-15D6-4909-9B64-AADE619CBF67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharedkernel", "sharedkernel\sharedkernel.csproj", "{04969522-15D6-4909-9B64-AADE619CBF67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shelveservice", "shelveservice\shelveservice.csproj", "{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shelveservice", "shelveservice\shelveservice.csproj", "{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateways", "APIGateways", "{9268F3BC-6257-4509-BFD8-B7BFEAA2E1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapigateway", "webapigateway\webapigateway.csproj", "{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapigateway", "webapigateway\webapigateway.csproj", "{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{65849A7E-0D98-4CB7-A37D-4490BB65B0F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharedsecurity", "sharedsecurity\sharedsecurity.csproj", "{5601623B-93D6-455D-800F-6E2196130A73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8BAB75E-D760-4577-9670-7CCAD90452ED}"
+	ProjectSection(SolutionItems) = preProject
+		dev.env = dev.env
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B12C0650-802F-49EB-89E5-92700E8E75BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -52,12 +56,22 @@ Global
 		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5601623B-93D6-455D-800F-6E2196130A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5601623B-93D6-455D-800F-6E2196130A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5601623B-93D6-455D-800F-6E2196130A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5601623B-93D6-455D-800F-6E2196130A73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2} = {9268F3BC-6257-4509-BFD8-B7BFEAA2E1A5}
-		{47AF55C2-D5A9-49C9-8F13-1A450BAB5444} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
 		{B12C0650-802F-49EB-89E5-92700E8E75BC} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
 		{877B53BF-C867-40C1-964C-2C51F75022D5} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
+		{47AF55C2-D5A9-49C9-8F13-1A450BAB5444} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
 		{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
+		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2} = {9268F3BC-6257-4509-BFD8-B7BFEAA2E1A5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8ED4CF56-5779-44DF-AF9E-A78C907EDF55}
 	EndGlobalSection
 EndGlobal

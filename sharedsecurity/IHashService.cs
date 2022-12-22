@@ -1,4 +1,4 @@
-﻿namespace identityservice.Infrastructure.Security
+﻿namespace sharedsecurity
 {
     public interface IHashService
     {

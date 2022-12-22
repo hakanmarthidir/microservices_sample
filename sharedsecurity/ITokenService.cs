@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace identityservice.Infrastructure.Security
+namespace sharedsecurity
 {
     public interface ITokenService
     {
