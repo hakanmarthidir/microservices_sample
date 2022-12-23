@@ -7,9 +7,9 @@ namespace identityservice.Domain.UserAggregate.DomainEvents
     {
         public Guid UserId { get; set; }
         public string UserEmail { get; set; }
-        public int RoleId { get; set; }
+        public Guid RoleId { get; set; }
 
-        public UserCreated(Guid id, string email, int roleId)
+        public UserCreated(Guid id, string email, Guid roleId)
         {
             this.UserId = id;
             this.UserEmail = email;

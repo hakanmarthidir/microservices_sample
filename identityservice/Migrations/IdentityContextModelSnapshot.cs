@@ -17,12 +17,12 @@ namespace identityservice.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.RefreshToken", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,13 +48,11 @@ namespace identityservice.Migrations
                     b.ToTable("RefreshToken", (string)null);
                 });
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.Role", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -93,9 +91,29 @@ namespace identityservice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e8e858f6-0df3-464a-ac2a-8d933ba669dd"),
+                            CreatedBy = "Unknown",
+                            CreatedDate = new DateTimeOffset(new DateTime(2022, 12, 23, 2, 21, 55, 343, DateTimeKind.Unspecified).AddTicks(7953), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDefault = true,
+                            Name = "Client",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("b4547ab5-621e-42a2-b8ed-29b0f11c5891"),
+                            CreatedBy = "Unknown",
+                            CreatedDate = new DateTimeOffset(new DateTime(2022, 12, 23, 2, 21, 55, 343, DateTimeKind.Unspecified).AddTicks(7971), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDefault = false,
+                            Name = "Administrator",
+                            Status = 0
+                        });
                 });
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.User", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,8 +139,8 @@ namespace identityservice.Migrations
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -136,9 +154,9 @@ namespace identityservice.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.RefreshToken", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.RefreshToken", b =>
                 {
-                    b.HasOne("identityservice.Domain.Entities.UserAggregate.User", "User")
+                    b.HasOne("identityservice.Domain.UserAggregate.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -147,15 +165,15 @@ namespace identityservice.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.User", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.User", b =>
                 {
-                    b.HasOne("identityservice.Domain.Entities.UserAggregate.Role", "Role")
+                    b.HasOne("identityservice.Domain.UserAggregate.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("identityservice.Domain.Entities.UserAggregate.ValueObjects.Email", "Email", b1 =>
+                    b.OwnsOne("identityservice.Domain.UserAggregate.ValueObjects.Email", "Email", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
@@ -173,7 +191,7 @@ namespace identityservice.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("identityservice.Domain.Entities.UserAggregate.ValueObjects.FullName", "FullName", b1 =>
+                    b.OwnsOne("identityservice.Domain.UserAggregate.ValueObjects.FullName", "FullName", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
@@ -196,7 +214,7 @@ namespace identityservice.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("identityservice.Domain.Entities.UserAggregate.ValueObjects.Parole", "Password", b1 =>
+                    b.OwnsOne("identityservice.Domain.UserAggregate.ValueObjects.Parole", "Password", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
@@ -214,7 +232,7 @@ namespace identityservice.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("identityservice.Domain.Entities.UserAggregate.ValueObjects.UserActivation", "Activation", b1 =>
+                    b.OwnsOne("identityservice.Domain.UserAggregate.ValueObjects.UserActivation", "Activation", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
@@ -254,12 +272,12 @@ namespace identityservice.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.Role", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.Role", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("identityservice.Domain.Entities.UserAggregate.User", b =>
+            modelBuilder.Entity("identityservice.Domain.UserAggregate.User", b =>
                 {
                     b.Navigation("Tokens");
                 });

@@ -15,7 +15,7 @@ namespace identityservice.Domain.UserAggregate
         public Email Email { get; private set; }
         [JsonIgnore]
         public Parole Password { get; private set; }
-        public int RoleId { get; private set; }
+        public Guid RoleId { get; private set; }
         public Domain.UserAggregate.Role Role { get; set; }
 
         public string? DeletedBy { get; set; }
@@ -32,10 +32,10 @@ namespace identityservice.Domain.UserAggregate
 
         private User() { }
 
-        private User(string name, string surname, string email, string password, int roleId) : this()
+        private User(string name, string surname, string email, string password, Guid roleId) : this()
         {
             this.Id = Guid.NewGuid();
-            this.RoleId = Guard.Against.NegativeOrZero(roleId, nameof(roleId), "Role could not be null.");
+            this.RoleId = Guard.Against.NullOrEmpty(roleId, nameof(roleId), "Role could not be null.");
             this.FullName = FullName.CreateFullName(name, surname);
             this.Email = Email.CreateEmail(email);
             this.Password = Parole.CreateParole(password);
@@ -46,7 +46,7 @@ namespace identityservice.Domain.UserAggregate
             RaiseEvent(new UserCreated(this.Id, this.Email.EmailAddress, this.RoleId));
         }
 
-        public static User CreateUser(string userName, string userSurname, string userEmail, string userPassword, int role)
+        public static User CreateUser(string userName, string userSurname, string userEmail, string userPassword, Guid role)
         {
             var user = new User(userName, userSurname, userEmail, userPassword, role);
             return user;

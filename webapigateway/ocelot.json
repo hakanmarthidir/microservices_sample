@@ -7,7 +7,15 @@
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/account/{requestname}",
       "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false
+      "RouteIsCaseSensitive": false,
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      }
     }, 
     {
       "UseServiceDiscovery": true,
@@ -25,7 +33,7 @@
         "Limit": 3
       },
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AuthenticationProviderKey": null,
         "AllowedScopes": []
       }
     },
@@ -38,7 +46,7 @@
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AuthenticationProviderKey": null,
         "AllowedScopes": []
       }
     },
@@ -54,7 +62,7 @@
         "TtlSeconds": 300
       },
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AuthenticationProviderKey": null,
         "AllowedScopes": []
       }
     },
@@ -67,7 +75,7 @@
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AuthenticationProviderKey": null,
         "AllowedScopes": []
       }
     },
@@ -83,7 +91,7 @@
         "TtlSeconds": 300
       },
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AuthenticationProviderKey": null,
         "AllowedScopes": []
       }
     },
@@ -96,7 +104,7 @@
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotGuardKey",
+        "AuthenticationProviderKey": null,
         "AllowedScopes": []
       }
     }
@@ -109,11 +117,12 @@
       "ClientIdHeader": "ClientId"
     },
     "ServiceDiscoveryProvider": {
-      "Scheme": "http",
-      "Host": "localhost",
+      "Host": "consul",
       "Port": 8500,
-      "Type": "Consul"
+      "Type": "PollConsul",
+      "PollingInterval": 100
     },
-    "BaseUrl": "http://localhost:5273"
+    "UseServiceDiscovery": true,
+    "RequestIdKey": "OcelotRequestIdKey"
   }
 }

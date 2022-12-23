@@ -25,7 +25,7 @@ builder.Services.AddDbContext<BookContext>(options => options.UseSqlServer(dbCon
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-var consulConfig = builder.Configuration.GetSection("CONSUL").Get<ConsulHostInfo>();
+var consulConfig = builder.Configuration.GetSection("CONSULHOSTINFO").Get<ConsulHostInfo>();
 builder.Services.AddSingleton(consulConfig);
 var consulServiceConfig = builder.Configuration.GetSection("CONSULCATALOG").Get<ConsulServiceInfo>();
 builder.Services.AddSingleton(consulServiceConfig);

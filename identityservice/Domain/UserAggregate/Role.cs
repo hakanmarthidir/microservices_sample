@@ -4,7 +4,7 @@ using sharedkernel.Interfaces;
 
 namespace identityservice.Domain.UserAggregate
 {
-    public class Role : BaseEntity<int>, ISoftDeletable, IAuditable
+    public class Role : BaseEntity<Guid>, ISoftDeletable, IAuditable
     {
         public string? Name { get; private set; }
         public string? DeletedBy { get; set; }
@@ -29,6 +29,7 @@ namespace identityservice.Domain.UserAggregate
 
         private Role(string roleName, bool isDefault) : this()
         {
+            this.Id = Guid.NewGuid();
             this.Name = Guard.Against.NullOrWhiteSpace(roleName, nameof(roleName), "Role name could not be null.");
             this.CreatedDate = DateTimeOffset.UtcNow;
             this.CreatedBy = Thread.CurrentPrincipal?.Identity?.Name ?? "Unknown";

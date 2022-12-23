@@ -1,15 +1,8 @@
-﻿using System;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
-using Consul;
-using identityservice.Domain.UserAggregate;
+﻿using identityservice.Domain.UserAggregate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Hosting;
 using sharedkernel;
-using sharedkernel.Interfaces;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace identityservice.Infrastructure.Persistence
 {

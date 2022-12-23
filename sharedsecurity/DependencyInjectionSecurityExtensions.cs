@@ -12,9 +12,12 @@ namespace sharedsecurity
         {
             services.Configure<JwtConfig>(configuration.GetSection("JWTCONFIG")); 
             var jwtConfiguration = configuration.GetSection("JWTCONFIG").Get<JwtConfig>();
-            
+
+            Console.WriteLine("SharedSecurity : " + jwtConfiguration.ToString());
+
             if (jwtConfiguration != null)
             {
+                
                 services.AddSingleton(jwtConfiguration);
                 services.AddTransient<IHashService, HashService>();
                 services.AddTransient<ITokenService, TokenService>();

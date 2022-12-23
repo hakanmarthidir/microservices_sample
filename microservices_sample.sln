@@ -19,11 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapigateway", "webapigate
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{65849A7E-0D98-4CB7-A37D-4490BB65B0F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharedsecurity", "sharedsecurity\sharedsecurity.csproj", "{5601623B-93D6-455D-800F-6E2196130A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharedsecurity", "sharedsecurity\sharedsecurity.csproj", "{5601623B-93D6-455D-800F-6E2196130A73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8BAB75E-D760-4577-9670-7CCAD90452ED}"
 	ProjectSection(SolutionItems) = preProject
 		dev.env = dev.env
+		docker-compose.dev.yml = docker-compose.dev.yml
 	EndProjectSection
 EndProject
 Global

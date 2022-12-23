@@ -5,16 +5,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace identityservice.Migrations
 {
-    public partial class initial : Migration
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -35,11 +36,11 @@ namespace identityservice.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName_Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    FullName_Surname = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email_EmailAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Password_Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    FullNameName = table.Column<string>(name: "FullName_Name", type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FullNameSurname = table.Column<string>(name: "FullName_Surname", type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    EmailEmailAddress = table.Column<string>(name: "Email_EmailAddress", type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    PasswordPassword = table.Column<string>(name: "Password_Password", type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
@@ -47,9 +48,9 @@ namespace identityservice.Migrations
                     CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Activation_IsActivated = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
-                    Activation_ActivationCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Activation_ActivationDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    ActivationIsActivated = table.Column<byte>(name: "Activation_IsActivated", type: "tinyint", nullable: false, defaultValue: (byte)0),
+                    ActivationActivationCode = table.Column<string>(name: "Activation_ActivationCode", type: "nvarchar(max)", nullable: false),
+                    ActivationActivationDate = table.Column<DateTimeOffset>(name: "Activation_ActivationDate", type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,6 +84,16 @@ namespace identityservice.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "Id", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "LastModifiedBy", "LastModifiedDate", "Name" },
+                values: new object[] { new Guid("b4547ab5-621e-42a2-b8ed-29b0f11c5891"), "Unknown", new DateTimeOffset(new DateTime(2022, 12, 23, 2, 21, 55, 343, DateTimeKind.Unspecified).AddTicks(7971), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, "Administrator" });
+
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "Id", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "IsDefault", "LastModifiedBy", "LastModifiedDate", "Name" },
+                values: new object[] { new Guid("e8e858f6-0df3-464a-ac2a-8d933ba669dd"), "Unknown", new DateTimeOffset(new DateTime(2022, 12, 23, 2, 21, 55, 343, DateTimeKind.Unspecified).AddTicks(7953), new TimeSpan(0, 0, 0, 0, 0)), null, null, true, null, null, "Client" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_UserId",
                 table: "RefreshToken",
@@ -94,6 +105,7 @@ namespace identityservice.Migrations
                 column: "RoleId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

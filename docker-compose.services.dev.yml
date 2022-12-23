@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+
+  webapigateway:
+    container_name: webapigateway
+    hostname: webapigateway
+    build:
+      context: .
+      dockerfile: /webapigateway/Dockerfile.apigateway.web.dev
+    ports:
+      - 14798:80
+    links:
+      - consulclient
+      - consulserver
+    depends_on:
+      - consulclient
+      - consulserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${RUNNING_ENVIRONMENT}            
+      - JWTCONFIG__Secret=${JWTCONFIG__Secret}
+      - JWTCONFIG__Duration=${JWTCONFIG__Duration}
+      - JWTCONFIG__Issuer=${JWTCONFIG__Issuer}
+      - JWTCONFIG__Audience=${JWTCONFIG__Audience}
+      - JWTCONFIG__RefreshTokenDuration=${JWTCONFIG__RefreshTokenDuration}
+      - AUTHENTICATION_PROVIDERKEY=${AUTHENTICATION_PROVIDERKEY}
+
+  identityservice:
+    container_name: identityservice
+    hostname: identityservice
+    build:
+      context: .
+      dockerfile: /identityservice/Dockerfile.identityservice.dev
+    links:
+      - identitysqlserver
+      - consulclient
+      - consulserver
+    ports:
+      - ${IDENTITYSERVICE_PORT}:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${RUNNING_ENVIRONMENT}            
+      - JWTCONFIG__Secret=${JWTCONFIG__Secret}
+      - JWTCONFIG__Duration=${JWTCONFIG__Duration}
+      - JWTCONFIG__Issuer=${JWTCONFIG__Issuer}
+      - JWTCONFIG__Audience=${JWTCONFIG__Audience}
+      - JWTCONFIG__RefreshTokenDuration=${JWTCONFIG__RefreshTokenDuration}
+      - AUTHENTICATION_PROVIDERKEY=${AUTHENTICATION_PROVIDERKEY}
+      - IDENTITY_DEFAULTCONNECTION=${IDENTITY_DEFAULTCONNECTION}
+  

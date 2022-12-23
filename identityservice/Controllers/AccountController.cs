@@ -6,6 +6,7 @@ using identityservice.Application.Contracts;
 using identityservice.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using sharedkernel.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,9 @@ namespace identityservice.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
+        [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IServiceResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IServiceResponse))]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
             var result = await _authenticationService.Login(request).ConfigureAwait(false);
@@ -32,6 +36,7 @@ namespace identityservice.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
+        [Route("[action]")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto request)
         {
             var result = await _authenticationService.Register(request).ConfigureAwait(false);
@@ -42,6 +47,7 @@ namespace identityservice.Controllers
 
         [Authorize(Policy = "AuthorizedClient")]
         [HttpPost("refreshtoken")]
+        [Route("[action]")]
         public async Task<ActionResult> RefreshToken([FromBody] RefreshAccessTokenDto request)
         {
             var result = await _authenticationService.RefreshAccessToken(request);

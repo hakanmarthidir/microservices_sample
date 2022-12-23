@@ -8,6 +8,11 @@ namespace sharedsecurity
         public string Issuer { get; set; }
         public string Audience { get; set; }
         public double? RefreshTokenDuration { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Secret} {Duration} {Issuer} {Audience} {RefreshTokenDuration}";
+        }
     }
 }
 
