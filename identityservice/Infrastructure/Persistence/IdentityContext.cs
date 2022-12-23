@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
+using Consul;
 using identityservice.Domain.UserAggregate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,8 @@ namespace identityservice.Infrastructure.Persistence
     public class IdentityContext : DbContext
     {
         private readonly IMediator? _mediator;
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Domain.UserAggregate.User> Users { get; set; }
+        public DbSet<Domain.UserAggregate.Role> Roles { get; set; }
         public DbSet<RefreshToken> Tokens { get; set; }
 
 
@@ -37,6 +38,13 @@ namespace identityservice.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(RoleConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TokenConfiguration).Assembly);
 
+
+            #region RoleSeeding
+            modelBuilder.Entity<Domain.UserAggregate.Role>().HasData(
+                Domain.UserAggregate.Role.CreateRole("Client", true),
+                Domain.UserAggregate.Role.CreateRole("Administrator", false)
+                );
+            #endregion
         }
 
         public override int SaveChanges()

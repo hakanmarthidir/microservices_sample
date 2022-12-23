@@ -3,7 +3,7 @@ using sharedkernel.Interfaces;
 
 namespace identityservice.Domain.UserAggregate.Interfaces
 {
-    public interface IRoleRepository : ICommandRepository<Role>, IQueryRepository<Role>
+    public interface IRoleRepository : ICommandRepository<Domain.UserAggregate.Role>, IQueryRepository<Domain.UserAggregate.Role>
     {
     }
 }

@@ -26,6 +26,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-await app.UseOcelot();
+app.UseOcelot().Wait();
 app.Run();
 

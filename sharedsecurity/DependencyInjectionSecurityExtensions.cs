@@ -6,17 +6,19 @@ using System.Text;
 
 namespace sharedsecurity
 {
-    public static class SecurityExtensions
+    public static class DependencyInjectionSecurityExtensions
     {
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtConfig>(configuration.GetSection("JWTCONFIG")); 
-            
             var jwtConfiguration = configuration.GetSection("JWTCONFIG").Get<JwtConfig>();
-            services.AddSingleton(jwtConfiguration);
-
+            
             if (jwtConfiguration != null)
             {
+                services.AddSingleton(jwtConfiguration);
+                services.AddTransient<IHashService, HashService>();
+                services.AddTransient<ITokenService, TokenService>();
+
                 var authenticationProviderKey = Environment.GetEnvironmentVariable("AUTHENTICATION_PROVIDERKEY");
                 services.AddAuthentication(x =>
                 {

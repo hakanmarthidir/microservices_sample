@@ -16,7 +16,7 @@ namespace identityservice.Domain.UserAggregate
         [JsonIgnore]
         public Parole Password { get; private set; }
         public int RoleId { get; private set; }
-        public Role Role { get; set; }
+        public Domain.UserAggregate.Role Role { get; set; }
 
         public string? DeletedBy { get; set; }
         public DateTimeOffset? DeletedDate { get; set; }

@@ -10,24 +10,25 @@ namespace bookcatalogservice.Infrastructure
     {
         public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime)
         {
+            var hostInfo = app.ApplicationServices.GetRequiredService<ConsulHostInfo>();
             var serviceInfo = app.ApplicationServices.GetRequiredService<ConsulServiceInfo>();
-            var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{serviceInfo.ConsulHost}:{serviceInfo.ConsulPort}"));
+            var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{hostInfo.ConsulHost}:{hostInfo.ConsulPort}"));
 
-            //var httpCheck = new AgentServiceCheck()
-            //{
-            //    HTTP = $"http://{serviceInfo.IP}:{serviceInfo.Port}/healthz",
-            //    DeregisterCriticalServiceAfter = TimeSpan.FromMinutes(1),
-            //    Timeout = TimeSpan.FromSeconds(10),
-            //    Interval = TimeSpan.FromSeconds(30),
-            //    Name = "BookCatalogHealthCheck"
-            //};
+            var httpCheck = new AgentServiceCheck()
+            {
+                HTTP = $"http://{serviceInfo.ServiceIp}:{serviceInfo.ServicePort}/healthz",
+                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(20),
+                Timeout = TimeSpan.FromSeconds(5),
+                Interval = TimeSpan.FromSeconds(5),
+                Name = "BookCatalogHealthCheck"
+            };
 
             var registration = new AgentServiceRegistration()
             {
-                //Checks = new[] { httpCheck },
+                Checks = new[] { httpCheck },
                 ID = $"{serviceInfo.ServiceName}-{Guid.NewGuid().ToString()}",
                 Name = serviceInfo.ServiceName,
-                Address = serviceInfo.ServiceIP,
+                Address = serviceInfo.ServiceIp,
                 Port = serviceInfo.ServicePort,
                 Tags = new[] { "Book", "Genre", "Author" }
             };

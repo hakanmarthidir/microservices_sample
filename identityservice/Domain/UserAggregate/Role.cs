@@ -37,7 +37,7 @@ namespace identityservice.Domain.UserAggregate
 
         public static Role CreateRole(string name, bool isDefault = false)
         {
-            return new Role(name, isDefault);
+            return new Domain.UserAggregate.Role(name, isDefault);
         }
     }
 }

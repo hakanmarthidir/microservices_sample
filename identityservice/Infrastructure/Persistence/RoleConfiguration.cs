@@ -5,9 +5,9 @@ using sharedkernel;
 
 namespace identityservice.Infrastructure.Persistence
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class RoleConfiguration : IEntityTypeConfiguration<Domain.UserAggregate.Role>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<Domain.UserAggregate.Role> builder)
         {
             builder.ToTable("Role");
             builder.HasKey(x => x.Id);

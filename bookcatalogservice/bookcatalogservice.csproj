@@ -69,8 +69,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Domain\" />
     <Folder Include="Application\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Infrastructure\Persistence\" />
     <Folder Include="Application\Book\" />
     <Folder Include="Application\Book\Commands\" />
     <Folder Include="Application\Book\Queries\" />
@@ -90,5 +88,6 @@
     <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\sharedsecurity\sharedsecurity.csproj" />
   </ItemGroup>
 </Project>
