@@ -7,6 +7,8 @@ using bookcatalogservice.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using sharedkernel;
 using sharedsecurity;
+using Prometheus;
+using Prometheus.SystemMetrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddHealthChecks();
+builder.Services.AddSystemMetrics();
 
 var app = builder.Build();
 
@@ -46,7 +49,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 
 
+app.UseHttpMetrics();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapMetrics();
 app.MapControllers();
 app.Run();

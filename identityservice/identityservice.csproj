@@ -33,6 +33,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.1" />
     <PackageReference Include="Consul" Version="1.6.10.8" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="prometheus-net.SystemMetrics" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

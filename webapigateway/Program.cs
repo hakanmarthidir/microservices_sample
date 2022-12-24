@@ -5,6 +5,7 @@ using Ocelot.Provider.Consul;
 using sharedsecurity;
 using Ocelot.Provider.Polly;
 
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

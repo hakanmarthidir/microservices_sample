@@ -106,5 +106,21 @@ services:
       - CONSULCATALOGSERVICEINFO__ServicePort=${CONSULCATALOGSERVICEINFO__ServicePort}
       - CONSULCATALOGSERVICEINFO__ServiceName=${CONSULCATALOGSERVICEINFO__ServiceName}
 
-
-
+  prometheus:
+    container_name: prometheus
+    hostname: prometheus
+    build: 
+      context: .
+      dockerfile: Dockerfile.prometheus.dev
+    ports:
+      - "9090:9090"
+    depends_on:
+      - bookcatalogservice
+      - identitysqlserver
+      - webapigateway
+  grafana:
+    image: grafana/grafana-enterprise
+    ports:
+      - "3001:3000"   
+    depends_on:
+      - prometheus

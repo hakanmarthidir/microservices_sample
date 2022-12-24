@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using identityservice.Infrastructure;
 using sharedkernel;
 using sharedsecurity;
-
-
+using Prometheus;
+using Prometheus.SystemMetrics;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(identityservice.Application.Mappers.AutoMappings));
@@ -36,6 +36,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddHealthChecks();
+builder.Services.AddSystemMetrics();
 
 var app = builder.Build();
 
@@ -48,9 +49,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     DatabaseManagementService.MigrationInitialize(app);
 }
 
-
+app.UseHttpMetrics();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapMetrics();
 app.MapControllers();
 
 app.Run();
