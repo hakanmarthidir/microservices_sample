@@ -2,16 +2,18 @@
 using Consul;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Configuration;
 using sharedkernel;
 
 namespace bookcatalogservice.Infrastructure
 {
     public static class ConsulClientRegister
     {
-        public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime)
+        public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime, IConfiguration configuration)
         {
-            var hostInfo = app.ApplicationServices.GetRequiredService<ConsulHostInfo>();
-            var serviceInfo = app.ApplicationServices.GetRequiredService<ConsulServiceInfo>();
+            var serviceInfo = configuration.GetSection("CONSULCATALOGSERVICEINFO").Get<ConsulCatalogServiceInfo>();
+            var hostInfo = configuration.GetSection("CONSULHOSTINFO").Get<ConsulHostInfo>();
+
             var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{hostInfo.ConsulHost}:{hostInfo.ConsulPort}"));
 
             var httpCheck = new AgentServiceCheck()

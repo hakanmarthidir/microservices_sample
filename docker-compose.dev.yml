@@ -2,6 +2,14 @@ version: '3.9'
 
 services:
 
+  consul:
+    image: consul:latest
+    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
+    hostname: consul
+    container_name: consul
+    ports:
+      - "8500:8500"
+
   identitysqlserver:
     container_name: identitysqlserver
     hostname: identitysqlserver
@@ -10,6 +18,16 @@ services:
       - "1433:1433"
     environment:
       SA_PASSWORD: ${IDENTITY_SA_PASSWORD}
+      ACCEPT_EULA: "Y"
+
+  catalogsqlserver:
+    container_name: catalogsqlserver
+    hostname: catalogsqlserver
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1434:1433"
+    environment:
+      SA_PASSWORD: ${CATALOG_SA_PASSWORD}
       ACCEPT_EULA: "Y"
 
   webapigateway:
@@ -35,6 +53,7 @@ services:
   identityservice:
     container_name: identityservice
     hostname: identityservice
+    restart: on-failure
     build:
       context: .
       dockerfile: /identityservice/Dockerfile.identityservice.dev
@@ -59,15 +78,33 @@ services:
       - CONSULIDENTITYSERVICEINFO__ServicePort=${CONSULIDENTITYSERVICEINFO__ServicePort}
       - CONSULIDENTITYSERVICEINFO__ServiceName=${CONSULIDENTITYSERVICEINFO__ServiceName}
 
-  consul:
-    image: consul:latest
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
-    hostname: consul
-    container_name: consul
+  bookcatalogservice:
+    container_name: bookcatalogservice
+    hostname: bookcatalogservice
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: /bookcatalogservice/Dockerfile.bookcatalogservice.dev
+    depends_on:
+      - catalogsqlserver
+      - consul
+      - webapigateway
     ports:
-      - "8500:8500"
+      - ${CATALOGSERVICE_PORT}:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${RUNNING_ENVIRONMENT}            
+      - JWTCONFIG__Secret=${JWTCONFIG__Secret}
+      - JWTCONFIG__Duration=${JWTCONFIG__Duration}
+      - JWTCONFIG__Issuer=${JWTCONFIG__Issuer}
+      - JWTCONFIG__Audience=${JWTCONFIG__Audience}
+      - JWTCONFIG__RefreshTokenDuration=${JWTCONFIG__RefreshTokenDuration}
+      - AUTHENTICATION_PROVIDERKEY=${AUTHENTICATION_PROVIDERKEY}
+      - CATALOG_DEFAULTCONNECTION=${CATALOG_DEFAULTCONNECTION}
+      - CONSULHOSTINFO__ConsulHost=${CONSULHOSTINFO__ConsulHost}
+      - CONSULHOSTINFO__ConsulPort=${CONSULHOSTINFO__ConsulPort}
+      - CONSULCATALOGSERVICEINFO__ServiceIp=${CONSULCATALOGSERVICEINFO__ServiceIp}
+      - CONSULCATALOGSERVICEINFO__ServicePort=${CONSULCATALOGSERVICEINFO__ServicePort}
+      - CONSULCATALOGSERVICEINFO__ServiceName=${CONSULCATALOGSERVICEINFO__ServiceName}
 
 
-     #- CONSULCATALOG__ServiceIp=${CONSULCATALOG__ServiceIp}
-     #- CONSULCATALOG__ServicePort=${CONSULCATALOG__ServicePort}
-     #- CONSULCATALOG__ServiceName=${CONSULCATALOG__ServiceName}
+

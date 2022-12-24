@@ -30,15 +30,7 @@ namespace bookcatalogservice.Controllers
         {
             return Ok(await this._mediator.Send(new GetAllBooksQuery() { Page = page, PageSize = pageSize }));
         }
-
-        // GET api/values/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/values
+        
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] BookCreateDto model)
         {

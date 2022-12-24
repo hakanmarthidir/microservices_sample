@@ -12,17 +12,18 @@ using bookcatalogservice.Infrastructure.Persistence;
 namespace bookcatalogservice.Migrations
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20220913211606_initial")]
+    [Migration("20221224000033_initial")]
     partial class initial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("bookcatalogservice.Domain.BookAggregate.Author", b =>
                 {
@@ -76,7 +77,7 @@ namespace bookcatalogservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsPopular")
                         .HasColumnType("bit");

@@ -29,8 +29,7 @@ namespace identityservice.Application.Services
             _tokenService = tokenService;
             _logService = logService;
             _mapper = mapper;
-            this._jwtConfig = jwtConfig.CurrentValue;
-            Console.WriteLine("AuthService : " + this._jwtConfig.ToString());
+            this._jwtConfig = jwtConfig.CurrentValue;           
         }
 
         public async Task<IServiceResponse> Register(UserRegisterDto userRegisterDto)

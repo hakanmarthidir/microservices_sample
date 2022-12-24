@@ -12,7 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-var dbConnection = Environment.GetEnvironmentVariable("CATALOG_DEFAULTCONNECTION");
+
+
+builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
+builder.Services.Configure<ConsulCatalogServiceInfo>(builder.Configuration.GetSection("CONSULCATALOGSERVICEINFO"));
+
+//var dbConnection = Environment.GetEnvironmentVariable("CATALOG_DEFAULTCONNECTION");
+var dbConnection = "Data Source=catalogsqlserver;Initial Catalog=bookservice;User Id=sa;Password=server2019!!;MultipleActiveResultSets=True;TrustServerCertificate=True";
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
@@ -25,20 +31,14 @@ builder.Services.AddDbContext<BookContext>(options => options.UseSqlServer(dbCon
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-var consulConfig = builder.Configuration.GetSection("CONSULHOSTINFO").Get<ConsulHostInfo>();
-builder.Services.AddSingleton(consulConfig);
-var consulServiceConfig = builder.Configuration.GetSection("CONSULCATALOG").Get<ConsulServiceInfo>();
-builder.Services.AddSingleton(consulServiceConfig);
-
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddHealthChecks().AddSqlServer(dbConnection);
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions{AllowCachingResponses = false});
 
-IHostApplicationLifetime lifetime = app.Lifetime;
-app.RegisterConsul(lifetime);
+app.RegisterConsul(app.Lifetime, builder.Configuration);
 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using identityservice.Infrastructure;
 using sharedkernel;
 using sharedsecurity;
-using Microsoft.Extensions.Configuration;
 
 
 

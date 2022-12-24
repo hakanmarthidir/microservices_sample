@@ -3,7 +3,7 @@
     {
       "UseServiceDiscovery": true,
       "ServiceName": "IdentityService",
-      "UpstreamPathTemplate": "/gateway/{requestname}",
+      "UpstreamPathTemplate": "/gateway/account/{requestname}",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/account/{requestname}",
       "DownstreamScheme": "http",
@@ -15,8 +15,12 @@
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 5000,
         "TimeoutValue": 2000
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": null,
+        "AllowedScopes": []
       }
-    }, 
+    },
     {
       "UseServiceDiscovery": true,
       "ServiceName": "BookCatalogService",
@@ -32,6 +36,14 @@
         "PeriodTimespan": 10,
         "Limit": 3
       },
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": null,
         "AllowedScopes": []
@@ -45,6 +57,14 @@
       "DownstreamPathTemplate": "/api/book",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": null,
         "AllowedScopes": []
@@ -58,6 +78,14 @@
       "DownstreamPathTemplate": "/api/author?page={page}&pageSize={pageSize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
       "FileCacheOptions": {
         "TtlSeconds": 300
       },
@@ -74,6 +102,14 @@
       "DownstreamPathTemplate": "/api/author",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": null,
         "AllowedScopes": []
@@ -87,6 +123,14 @@
       "DownstreamPathTemplate": "/api/genre?{url}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
       "FileCacheOptions": {
         "TtlSeconds": 300
       },
@@ -103,6 +147,14 @@
       "DownstreamPathTemplate": "/api/genre",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": null,
         "AllowedScopes": []

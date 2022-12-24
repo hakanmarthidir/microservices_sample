@@ -17,19 +17,10 @@ builder.Services.AddOcelot(builder.Configuration)
     .AddConsul()
     .AddPolly();
 
-builder.Services.AddHealthChecks();
-
 var app = builder.Build();
-
-app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions 
-{
-     AllowCachingResponses= false
-});
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-await app.UseOcelot();
+app.UseOcelot().Wait();
 app.Run();
 

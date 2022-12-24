@@ -24,7 +24,7 @@ namespace bookcatalogservice.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().HasOne<Genre>(x => x.Genre).WithMany(b => b.Books);
-            modelBuilder.Entity<Book>().HasOne<Author>(x => x.Author).WithMany(b => b.Books);
+            modelBuilder.Entity<Book>().HasOne<Author>(x => x.Author).WithMany(b => b.Books);          
         }
     }
 }
