@@ -3,9 +3,9 @@
     {
       "UseServiceDiscovery": true,
       "ServiceName": "IdentityService",
-      "UpstreamPathTemplate": "/gateway/account/{requestname}",
+      "UpstreamPathTemplate": "/gateway/v1/account/{requestname}",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/account/{requestname}",
+      "DownstreamPathTemplate": "/api/v1/account/{requestname}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "LoadBalancerOptions": {
@@ -24,9 +24,9 @@
     {
       "UseServiceDiscovery": true,
       "ServiceName": "BookCatalogService",
-      "UpstreamPathTemplate": "/gateway/book?page={page}&pageSize={pageSize}",
-      "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/book?page={page}&pageSize={pageSize}",
+      "UpstreamPathTemplate": "/gateway/v1/catalog/{requestname}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamPathTemplate": "/api/v1/catalog/{requestname}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "RateLimitOptions": {
@@ -36,117 +36,6 @@
         "PeriodTimespan": 10,
         "Limit": 3
       },
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      },
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 5000,
-        "TimeoutValue": 2000
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": null,
-        "AllowedScopes": []
-      }
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "BookCatalogService",
-      "UpstreamPathTemplate": "/gateway/book",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/book",
-      "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      },
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 5000,
-        "TimeoutValue": 2000
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": null,
-        "AllowedScopes": []
-      }
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "BookCatalogService",
-      "UpstreamPathTemplate": "/gateway/author?page={page}&pageSize={pageSize}",
-      "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/author?page={page}&pageSize={pageSize}",
-      "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      },
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 5000,
-        "TimeoutValue": 2000
-      },
-      "FileCacheOptions": {
-        "TtlSeconds": 300
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": null,
-        "AllowedScopes": []
-      }
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "BookCatalogService",
-      "UpstreamPathTemplate": "/gateway/author",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/author",
-      "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      },
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 5000,
-        "TimeoutValue": 2000
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": null,
-        "AllowedScopes": []
-      }
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "BookCatalogService",
-      "UpstreamPathTemplate": "/gateway/genre?{url}",
-      "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/genre?{url}",
-      "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      },
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 5000,
-        "TimeoutValue": 2000
-      },
-      "FileCacheOptions": {
-        "TtlSeconds": 300
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": null,
-        "AllowedScopes": []
-      }
-    },
-    {
-      "UseServiceDiscovery": true,
-      "ServiceName": "BookCatalogService",
-      "UpstreamPathTemplate": "/gateway/genre",
-      "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamPathTemplate": "/api/genre",
-      "DownstreamScheme": "http",
-      "RouteIsCaseSensitive": false,
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
       },

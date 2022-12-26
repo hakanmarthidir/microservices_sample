@@ -19,8 +19,8 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
 builder.Services.Configure<ConsulCatalogServiceInfo>(builder.Configuration.GetSection("CONSULCATALOGSERVICEINFO"));
 
-//var dbConnection = Environment.GetEnvironmentVariable("CATALOG_DEFAULTCONNECTION");
-var dbConnection = "Data Source=catalogsqlserver;Initial Catalog=bookservice;User Id=sa;Password=server2019!!;MultipleActiveResultSets=True;TrustServerCertificate=True";
+var dbConnection = Environment.GetEnvironmentVariable("CATALOG_DEFAULTCONNECTION");
+//var dbConnection = "Data Source=catalogsqlserver;Initial Catalog=bookservice;User Id=sa;Password=server2019!!;MultipleActiveResultSets=True;TrustServerCertificate=True";
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace bookcatalogservice.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/catalog/[controller]")]
     [ApiController]
     public class GenreController : ControllerBase
     {

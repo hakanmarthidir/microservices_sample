@@ -7,6 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\**" />
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="Domain\ShelveAggregate\Interfaces\**" />
+    <Compile Remove="Domain\ShelveAggregate\Specs\**" />
+    <Compile Remove="Infrastructure\**" />
+    <Content Remove="Application\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="Domain\ShelveAggregate\Interfaces\**" />
+    <Content Remove="Domain\ShelveAggregate\Specs\**" />
+    <Content Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Application\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="Domain\ShelveAggregate\Interfaces\**" />
+    <EmbeddedResource Remove="Domain\ShelveAggregate\Specs\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <None Remove="Application\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="Domain\ShelveAggregate\Interfaces\**" />
+    <None Remove="Domain\ShelveAggregate\Specs\**" />
+    <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
@@ -33,8 +56,6 @@
     <None Remove="Domain\ShelveAggregate\" />
     <None Remove="Domain\ShelveAggregate\Interfaces\" />
     <None Remove="Domain\ShelveAggregate\Specs\" />
-    <None Remove="Infrastructure\Persistence\" />
-    <None Remove="Application\Mappers\" />
     <None Remove="AutoMapper" />
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <None Remove="MediatR" />
@@ -46,15 +67,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Application\" />
-    <Folder Include="Domain\" />
     <Folder Include="Domain\ShelveAggregate\" />
-    <Folder Include="Domain\ShelveAggregate\Interfaces\" />
-    <Folder Include="Domain\ShelveAggregate\Specs\" />
-    <Folder Include="Infrastructure\Persistence\" />
-    <Folder Include="Application\Mappers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">
