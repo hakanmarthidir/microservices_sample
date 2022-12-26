@@ -11,6 +11,8 @@ using sharedkernel;
 using sharedsecurity;
 using Prometheus;
 using Prometheus.SystemMetrics;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(identityservice.Application.Mappers.AutoMappings));
@@ -37,6 +39,35 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
+
+
+var serviceName = "IdentityService";
+var serviceVersion = "0.0.1";
+builder.Services.AddHttpClient();
+
+builder.Services.AddOpenTelemetryTracing(b =>
+{
+    b
+     .AddAspNetCoreInstrumentation(options =>
+     {
+         options.RecordException = true;
+     })
+    .AddHttpClientInstrumentation()
+    .AddSqlClientInstrumentation()
+    .AddEntityFrameworkCoreInstrumentation()
+    //.AddConsoleExporter()
+    .AddJaegerExporter(options =>
+    {
+        var agentHost = "jaeger";
+        var agentPort = 6831;
+        options.AgentHost = agentHost;
+        options.AgentPort = agentPort;
+
+    })
+    .AddSource(serviceName)
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion));
+});
+
 
 var app = builder.Build();
 

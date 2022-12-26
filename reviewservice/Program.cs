@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Prometheus;
 using Prometheus.SystemMetrics;
 using reviewservice.Domain.ReviewAggregate.Interfaces;
@@ -29,6 +31,36 @@ builder.Services.AddControllers();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
+
+
+
+var serviceName = "ReviewService";
+var serviceVersion = "0.0.1";
+builder.Services.AddHttpClient();
+
+builder.Services.AddOpenTelemetryTracing(b =>
+{
+    b
+     .AddAspNetCoreInstrumentation(options =>
+     {
+         options.RecordException = true;
+     })
+    .AddHttpClientInstrumentation()
+    .AddSqlClientInstrumentation()
+    .AddEntityFrameworkCoreInstrumentation()
+    //.AddConsoleExporter()
+    .AddJaegerExporter(options =>
+    {
+        var agentHost = "jaeger";
+        var agentPort = 6831;
+        options.AgentHost = agentHost;
+        options.AgentPort = agentPort;
+
+    })
+    .AddSource(serviceName)
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion));
+});
+
 
 var app = builder.Build();
 
