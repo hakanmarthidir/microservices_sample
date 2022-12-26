@@ -13,6 +13,8 @@ using Prometheus;
 using Prometheus.SystemMetrics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
+using sharedkernel.Middlewares;
+using sharedmonitoring;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(identityservice.Application.Mappers.AutoMappings));
@@ -41,33 +43,9 @@ builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
 
 
-var serviceName = "IdentityService";
-var serviceVersion = "0.0.1";
+
 builder.Services.AddHttpClient();
-
-builder.Services.AddOpenTelemetryTracing(b =>
-{
-    b
-     .AddAspNetCoreInstrumentation(options =>
-     {
-         options.RecordException = true;
-     })
-    .AddHttpClientInstrumentation()
-    .AddSqlClientInstrumentation()
-    .AddEntityFrameworkCoreInstrumentation()
-    //.AddConsoleExporter()
-    .AddJaegerExporter(options =>
-    {
-        var agentHost = "jaeger";
-        var agentPort = 6831;
-        options.AgentHost = agentHost;
-        options.AgentPort = agentPort;
-
-    })
-    .AddSource(serviceName)
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion));
-});
-
+builder.Services.AddJaegerOpenTelemetryTracing("IdentityService", "0.0.1");
 
 var app = builder.Build();
 
@@ -80,6 +58,13 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     DatabaseManagementService.MigrationInitialize(app);
 }
 
+app.UseRouting();
+app.UseCors(x => x
+   .AllowAnyOrigin()
+   .AllowAnyMethod()
+   .AllowAnyHeader());
+
+app.UseCorrelationMiddleware();
 app.UseHttpMetrics();
 app.UseAuthentication();
 app.UseAuthorization();

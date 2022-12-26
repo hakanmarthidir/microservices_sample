@@ -6,7 +6,8 @@ using sharedsecurity;
 using Ocelot.Provider.Polly;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
-using Ocelot.Tracing.OpenTracing;
+using sharedmonitoring;
+using sharedmonitoring.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,44 +20,23 @@ builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange
 builder.Services.AddOcelot(builder.Configuration)
     .AddCacheManager(x => x.WithDictionaryHandle())
     .AddConsul()
-    .AddPolly()
-    //.AddOpenTracing()
-    ;
+    .AddPolly();
 
 
-var serviceName = "OcelotWebApiGateway";
-var serviceVersion = "0.0.1";
+
 builder.Services.AddHttpClient();
-
-builder.Services.AddOpenTelemetryTracing(b =>
-{
-    b
-     .AddAspNetCoreInstrumentation(options =>
-     {
-         options.RecordException = true;
-     })
-    .AddHttpClientInstrumentation()
-    .AddSqlClientInstrumentation()
-    .AddEntityFrameworkCoreInstrumentation()
-    //.AddConsoleExporter()
-    .AddJaegerExporter(options =>
-    {
-        var agentHost = "jaeger";
-        var agentPort = 6831;
-        options.AgentHost = agentHost;
-        options.AgentPort = agentPort;
-
-    })
-    .AddSource(serviceName)
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion));
-});
-
-
-
-
-
+builder.Services.AddJaegerOpenTelemetryTracing("OcelotWebApiGateway", "0.0.1");
 
 var app = builder.Build();
+
+app.UseRouting();
+
+app.UseCors(x => x
+   .AllowAnyOrigin()
+   .AllowAnyMethod()
+   .AllowAnyHeader());
+           
+app.UseCorrelationMiddleware();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

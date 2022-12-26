@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\sharedmonitoring\sharedmonitoring.csproj" />
     <ProjectReference Include="..\sharedsecurity\sharedsecurity.csproj" />
     <ProjectReference Include="..\shelveservice\shelveservice.csproj" />
   </ItemGroup>

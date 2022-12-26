@@ -79,5 +79,7 @@
     <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\sharedmonitoring\sharedmonitoring.csproj" />
+    <ProjectReference Include="..\sharedsecurity\sharedsecurity.csproj" />
   </ItemGroup>
 </Project>

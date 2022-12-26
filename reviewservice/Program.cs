@@ -9,6 +9,8 @@ using reviewservice.Domain.ReviewAggregate.Interfaces;
 using reviewservice.Infrastructure;
 using reviewservice.Infrastructure.Persistence;
 using sharedkernel;
+using sharedmonitoring;
+using sharedmonitoring.Middlewares;
 using sharedsecurity;
 using System.Reflection;
 
@@ -33,33 +35,8 @@ builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
 
 
-
-var serviceName = "ReviewService";
-var serviceVersion = "0.0.1";
 builder.Services.AddHttpClient();
-
-builder.Services.AddOpenTelemetryTracing(b =>
-{
-    b
-     .AddAspNetCoreInstrumentation(options =>
-     {
-         options.RecordException = true;
-     })
-    .AddHttpClientInstrumentation()
-    .AddSqlClientInstrumentation()
-    .AddEntityFrameworkCoreInstrumentation()
-    //.AddConsoleExporter()
-    .AddJaegerExporter(options =>
-    {
-        var agentHost = "jaeger";
-        var agentPort = 6831;
-        options.AgentHost = agentHost;
-        options.AgentPort = agentPort;
-
-    })
-    .AddSource(serviceName)
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion));
-});
+builder.Services.AddJaegerOpenTelemetryTracing("ReviewService", "0.0.1");
 
 
 var app = builder.Build();
@@ -73,7 +50,13 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     DatabaseManagementService.MigrationInitialize(app);
 }
 
+app.UseRouting();
+app.UseCors(x => x
+   .AllowAnyOrigin()
+   .AllowAnyMethod()
+   .AllowAnyHeader());
 
+app.UseCorrelationMiddleware();
 app.UseHttpMetrics();
 app.UseAuthentication();
 app.UseAuthorization();
