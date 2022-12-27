@@ -1,5 +1,3 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -9,6 +7,7 @@ WORKDIR /src
 COPY ["reviewservice/reviewservice.csproj", "reviewservice/"]
 COPY ["sharedkernel/sharedkernel.csproj", "sharedkernel/"]
 COPY ["sharedsecurity/sharedsecurity.csproj", "sharedsecurity/"]
+COPY ["sharedmonitoring/sharedmonitoring.csproj", "sharedmonitoring/"]
 RUN dotnet restore "reviewservice/reviewservice.csproj"
 COPY . .
 WORKDIR "/src/reviewservice"

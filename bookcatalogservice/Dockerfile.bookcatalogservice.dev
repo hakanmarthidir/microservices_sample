@@ -8,6 +8,7 @@ WORKDIR /src
 COPY ["bookcatalogservice/bookcatalogservice.csproj", "bookcatalogservice/"]
 COPY ["sharedkernel/sharedkernel.csproj", "sharedkernel/"]
 COPY ["sharedsecurity/sharedsecurity.csproj", "sharedsecurity/"]
+COPY ["sharedmonitoring/sharedmonitoring.csproj", "sharedmonitoring/"]
 RUN dotnet restore "bookcatalogservice/bookcatalogservice.csproj"
 COPY . .
 WORKDIR "/src/bookcatalogservice"

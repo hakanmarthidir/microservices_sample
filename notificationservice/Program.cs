@@ -1,6 +1,8 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using sharedmonitoring;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddSerilogExtension();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

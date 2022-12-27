@@ -13,7 +13,7 @@ using sharedmonitoring;
 using sharedmonitoring.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));

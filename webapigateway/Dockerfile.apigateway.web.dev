@@ -5,7 +5,9 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["webapigateway/webapigateway.csproj", "webapigateway/"]
+COPY ["sharedkernel/sharedkernel.csproj", "sharedkernel/"]
 COPY ["sharedsecurity/sharedsecurity.csproj", "sharedsecurity/"]
+COPY ["sharedmonitoring/sharedmonitoring.csproj", "sharedmonitoring/"]
 RUN dotnet restore "webapigateway/webapigateway.csproj"
 COPY . .
 WORKDIR "/src/webapigateway"

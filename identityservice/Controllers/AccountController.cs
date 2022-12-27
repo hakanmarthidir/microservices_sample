@@ -17,9 +17,11 @@ namespace identityservice.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
-        public AccountController(IAuthenticationService authenticationService)
+        private readonly ILogger<AccountController> _logger;
+        public AccountController(IAuthenticationService authenticationService, ILogger<AccountController> logger)
         {
             _authenticationService = authenticationService;
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -29,6 +31,7 @@ namespace identityservice.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IServiceResponse))]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
+            this._logger.LogCritical("account login request.");
             var result = await _authenticationService.Login(request).ConfigureAwait(false);
 
             return Ok(result);

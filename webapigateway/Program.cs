@@ -4,13 +4,12 @@ using Ocelot.Cache.CacheManager;
 using Ocelot.Provider.Consul;
 using sharedsecurity;
 using Ocelot.Provider.Polly;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
 using sharedmonitoring;
 using sharedmonitoring.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddSerilogExtension();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -21,8 +20,6 @@ builder.Services.AddOcelot(builder.Configuration)
     .AddCacheManager(x => x.WithDictionaryHandle())
     .AddConsul()
     .AddPolly();
-
-
 
 builder.Services.AddHttpClient();
 builder.Services.AddJaegerOpenTelemetryTracing("OcelotWebApiGateway", "0.0.1");

@@ -15,7 +15,7 @@
         "UseTracing": true
       },
       "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
+        "ExceptionsAllowedBeforeBreaking": 5,
         "DurationOfBreak": 5000,
         "TimeoutValue": 2000
       },
@@ -37,7 +37,7 @@
         "EnableRateLimiting": true,
         "Period": "10s",
         "PeriodTimespan": 10,
-        "Limit": 3
+        "Limit": 10
       },
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
@@ -46,7 +46,38 @@
         "UseTracing": true
       },
       "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
+        "ExceptionsAllowedBeforeBreaking": 5,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": null,
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "ReviewService",
+      "UpstreamPathTemplate": "/gateway/v1/review/{requestname}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamPathTemplate": "/api/v1/review/{requestname}",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "PeriodTimespan": 10,
+        "Limit": 10
+      },
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "HttpHandlerOptions": {
+        "UseTracing": true
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 5,
         "DurationOfBreak": 5000,
         "TimeoutValue": 2000
       },
@@ -66,8 +97,7 @@
     "ServiceDiscoveryProvider": {
       "Host": "consul",
       "Port": 8500,
-      "Type": "PollConsul",
-      "PollingInterval": 100
+      "Type": "Consul"
     },
     "UseServiceDiscovery": true,
     "RequestIdKey": "OcelotRequestIdKey"

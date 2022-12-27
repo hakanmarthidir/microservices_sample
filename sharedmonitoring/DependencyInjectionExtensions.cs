@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Serilog;
 
 namespace sharedmonitoring
 {
@@ -27,6 +29,20 @@ namespace sharedmonitoring
                 .AddSource(serviceName)
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName, serviceVersion));
             });
+        }
+
+        public static ILoggingBuilder AddSerilogExtension(this ILoggingBuilder logging)
+        {
+            logging.ClearProviders();
+
+            var logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.Debug()
+                .WriteTo.LogstashHttp("http://logstashoutput:5044")
+                .CreateLogger();
+            return logging.AddSerilog(logger);
         }
     }
 }

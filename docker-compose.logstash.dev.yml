@@ -1,0 +1,75 @@
+version: '3.9'
+
+networks:
+  microservice-network:
+    driver: bridge
+
+services:
+
+  logstashoutput:
+    container_name: logstashoutput
+    hostname: logstashoutput
+    build: 
+      context: .
+      dockerfile: Dockerfile.logstashoutput.dev
+    ports:
+      - "5044:5044"
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservice-network
+    environment:
+      - ELASTIC_CONTAINER=false
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - microservice-network
+
+
+  logstashinput:
+    container_name: logstashinput
+    hostname: logstashinput
+    build: 
+      context: .
+      dockerfile: Dockerfile.logstashinput.dev
+    ports:
+      - "5045:5045"
+    depends_on:
+      - rabbitmq
+      - elasticsearch
+    networks:
+      - microservice-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.2
+    container_name: elasticsearch
+    hostname: elasticsearch
+    environment:
+      - node.name=es-node
+      - cluster.name=es-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - ./docker-data/elasticsearch/data:/usr/share/elasticsearch/data
+    networks:
+      - microservice-network
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.2
+    container_name: kibana
+    hostname: kibana
+    ports:
+      - 5601:5601
+    networks:
+      - microservice-network
+    depends_on:
+      - elasticsearch
+    restart: 'unless-stopped'

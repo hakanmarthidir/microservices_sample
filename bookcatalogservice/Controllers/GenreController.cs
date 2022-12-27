@@ -14,16 +14,19 @@ namespace bookcatalogservice.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<GenreController> _logger;
 
-        public GenreController(IMediator mediator)
+        public GenreController(IMediator mediator, ILogger<GenreController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [Authorize(Policy = "AuthorizedClient")]
         [HttpGet]
         public async Task<IActionResult> GetGenres([FromQuery] int page, int pageSize)
         {
+            this._logger.LogCritical("genres log");
             return Ok(await this._mediator.Send(new GetAllGenresQuery() { Page = page, PageSize = pageSize }));
         }
 

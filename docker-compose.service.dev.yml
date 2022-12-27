@@ -39,7 +39,6 @@ services:
       - 14798:80
     depends_on:
       - consul
-      - jaeger
     environment:
       - ASPNETCORE_ENVIRONMENT=${RUNNING_ENVIRONMENT}            
       - JWTCONFIG__Secret=${JWTCONFIG__Secret}
@@ -62,7 +61,6 @@ services:
       - servicesqlserver
       - consul
       - webapigateway
-      - jaeger
     ports:
       - ${IDENTITYSERVICE_PORT}:80
     environment:
@@ -93,8 +91,6 @@ services:
       - servicesqlserver
       - consul
       - webapigateway
-      - jaeger
-      - logstashoutput
     ports:
       - ${CATALOGSERVICE_PORT}:80
     environment:
@@ -125,7 +121,6 @@ services:
       - servicesqlserver
       - consul
       - webapigateway
-      - jaeger
     ports:
       - ${REVIEWSERVICE_PORT}:80
     environment:
@@ -145,113 +140,3 @@ services:
     networks:
       - microservice-network
 
-  prometheus:
-    container_name: prometheus
-    hostname: prometheus
-    build: 
-      context: .
-      dockerfile: Dockerfile.prometheus.dev
-    ports:
-      - "9090:9090"
-    depends_on:
-      - bookcatalogservice
-      - identityservice
-      - reviewservice
-      - webapigateway
-    networks:
-      - microservice-network
-
-  grafana:
-    image: grafana/grafana-enterprise
-    container_name: grafana
-    hostname: grafana
-    ports:
-      - "3001:3000"   
-    depends_on:
-      - prometheus
-    networks:
-      - microservice-network
-
-  jaeger:
-    image: jaegertracing/all-in-one:1.40
-    container_name: jaeger
-    hostname: jaeger
-    restart: unless-stopped
-    ports:
-      - 5775:5775/udp
-      - 5778:5778
-      - 6831:6831/udp
-      - 6832:6832/udp
-      - 9411:9411
-      - 14250:14250
-      - 14268:14268
-      - 14269:14269
-      - 16686:16686
-      - 4317:4317
-      - 4318:4318
-    networks:
-      - microservice-network
-
-  zookeeperoutput:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeperoutput
-    hostname: zookeeperoutput
-    ports:
-      - "2181:2181"   
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes 
-      - ZOOKEEPER_CLIENT_PORT=2181 
-      - ZOOKEEPER_TICK_TIME=2000
-    networks:
-      - microservice-network
-
-  kafkaoutput:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafkaoutput
-    hostname: kafkaoutput
-    ports:
-      - "9092:9092"   
-      - "9093:9093"
-    environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeperoutput:2181
-      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
-      - KAFKA_LISTENERS=INTERNAL://:9092,OUTSIDE://:9093
-      - KAFKA_ADVERTISED_LISTENERS= INTERNAL://kafkaoutput:9092,OUTSIDE://host.docker.internal:9093
-      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP= INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
-      - ALLOW_PLAINTEXT_LISTENER=yes 
-      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true 
-      - KAFKA_CREATE_TOPICS="microservicelogs:1:1"
-    extra_hosts:
-      - "host.docker.internal:172.17.0.1"
-    networks:
-      - microservice-network
-    depends_on:
-      - zookeeperoutput
-
-  kafkacontrolcenter:
-    image: confluentinc/cp-enterprise-control-center:latest
-    hostname: kafkacontrolcenter
-    container_name: kafkacontrolcenter
-    depends_on:
-      - kafkaoutput
-    ports:
-      - "9021:9021"
-    environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafkaoutput:9092'
-      CONTROL_CENTER_REPLICATION_FACTOR: 1
-      PORT: 9021
-
-  logstashoutput:
-    container_name: logstashoutput
-    hostname: logstashoutput
-    build: 
-      context: .
-      dockerfile: Dockerfile.logstashoutput.dev
-    ports:
-      - "5044:5044"
-    depends_on:
-      - kafkaoutput
-    networks:
-      - microservice-network

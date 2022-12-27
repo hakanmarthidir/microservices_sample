@@ -11,12 +11,11 @@ using sharedkernel;
 using sharedsecurity;
 using Prometheus;
 using Prometheus.SystemMetrics;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
-using sharedkernel.Middlewares;
 using sharedmonitoring;
+using sharedmonitoring.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(typeof(identityservice.Application.Mappers.AutoMappings));
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 

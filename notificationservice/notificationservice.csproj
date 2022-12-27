@@ -20,4 +20,8 @@
   <ItemGroup>
     <None Remove="Controllers\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\sharedmonitoring\sharedmonitoring.csproj" />
+  </ItemGroup>
 </Project>

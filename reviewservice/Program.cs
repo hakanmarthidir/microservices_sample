@@ -15,14 +15,14 @@ using sharedsecurity;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
 builder.Services.Configure<ConsulReviewServiceInfo>(builder.Configuration.GetSection("CONSULREVIEWSERVICEINFO"));
 
 var dbConnection = Environment.GetEnvironmentVariable("REVIEW_DEFAULTCONNECTION");
-//var dbConnection = "Data Source=reviewsqlserver;Initial Catalog=reviewservice;User Id=sa;Password=server2019!!;MultipleActiveResultSets=True;TrustServerCertificate=True";
+//var dbConnection = "Data Source=localhost;Initial Catalog=reviewservice;User Id=sa;Password=server2019;MultipleActiveResultSets=True;TrustServerCertificate=True";
 
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

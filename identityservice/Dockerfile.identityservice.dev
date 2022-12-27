@@ -8,6 +8,7 @@ WORKDIR /src
 COPY ["identityservice/identityservice.csproj", "identityservice/"]
 COPY ["sharedkernel/sharedkernel.csproj", "sharedkernel/"]
 COPY ["sharedsecurity/sharedsecurity.csproj", "sharedsecurity/"]
+COPY ["sharedmonitoring/sharedmonitoring.csproj", "sharedmonitoring/"]
 RUN dotnet restore "identityservice/identityservice.csproj"
 COPY . .
 WORKDIR "/src/identityservice"
