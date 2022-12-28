@@ -31,7 +31,6 @@ services:
     networks:
       - microservice-network
 
-
   logstashinput:
     container_name: logstashinput
     hostname: logstashinput
