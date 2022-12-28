@@ -192,57 +192,6 @@ services:
     networks:
       - microservice-network
 
-  zookeeperoutput:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeperoutput
-    hostname: zookeeperoutput
-    ports:
-      - "2181:2181"   
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes 
-      - ZOOKEEPER_CLIENT_PORT=2181 
-      - ZOOKEEPER_TICK_TIME=2000
-    networks:
-      - microservice-network
-
-  kafkaoutput:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafkaoutput
-    hostname: kafkaoutput
-    ports:
-      - "9092:9092"   
-      - "9093:9093"
-    environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeperoutput:2181
-      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
-      - KAFKA_LISTENERS=INTERNAL://:9092,OUTSIDE://:9093
-      - KAFKA_ADVERTISED_LISTENERS= INTERNAL://kafkaoutput:9092,OUTSIDE://host.docker.internal:9093
-      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP= INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
-      - ALLOW_PLAINTEXT_LISTENER=yes 
-      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true 
-      - KAFKA_CREATE_TOPICS="microservicelogs:1:1"
-    extra_hosts:
-      - "host.docker.internal:172.17.0.1"
-    networks:
-      - microservice-network
-    depends_on:
-      - zookeeperoutput
-
-  kafkacontrolcenter:
-    image: confluentinc/cp-enterprise-control-center:latest
-    hostname: kafkacontrolcenter
-    container_name: kafkacontrolcenter
-    depends_on:
-      - kafkaoutput
-    ports:
-      - "9021:9021"
-    environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafkaoutput:9092'
-      CONTROL_CENTER_REPLICATION_FACTOR: 1
-      PORT: 9021
-
   logstashoutput:
     container_name: logstashoutput
     hostname: logstashoutput
@@ -252,6 +201,59 @@ services:
     ports:
       - "5044:5044"
     depends_on:
-      - kafkaoutput
+      - rabbitmq
     networks:
       - microservice-network
+    environment:
+      - ELASTIC_CONTAINER=false
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - microservice-network
+
+  logstashinput:
+    container_name: logstashinput
+    hostname: logstashinput
+    build: 
+      context: .
+      dockerfile: Dockerfile.logstashinput.dev
+    ports:
+      - "5045:5045"
+    depends_on:
+      - rabbitmq
+      - elasticsearch
+    networks:
+      - microservice-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.2
+    container_name: elasticsearch
+    hostname: elasticsearch
+    environment:
+      - node.name=es-node
+      - cluster.name=es-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - microservice-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.2
+    container_name: kibana
+    hostname: kibana
+    ports:
+      - 5601:5601
+    networks:
+      - microservice-network
+    depends_on:
+      - elasticsearch
+    restart: 'unless-stopped'
