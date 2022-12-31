@@ -15,5 +15,6 @@
     public class ConsulIdentityServiceInfo : ConsulServiceInfo{}
     public class ConsulCatalogServiceInfo : ConsulServiceInfo{}
     public class ConsulReviewServiceInfo : ConsulServiceInfo{}
+    public class ConsulShelveServiceInfo : ConsulServiceInfo { }
 }
 

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "identityservice", "identityservice\identityservice.csproj", "{B12C0650-802F-49EB-89E5-92700E8E75BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notificationservice", "notificationservice\notificationservice.csproj", "{877B53BF-C867-40C1-964C-2C51F75022D5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookcatalogservice", "bookcatalogservice\bookcatalogservice.csproj", "{47AF55C2-D5A9-49C9-8F13-1A450BAB5444}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharedkernel", "sharedkernel\sharedkernel.csproj", "{04969522-15D6-4909-9B64-AADE619CBF67}"
@@ -25,19 +23,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		dev.env = dev.env
 		docker-compose.dev.yml = docker-compose.dev.yml
-		docker-compose.metric.dev.yml = docker-compose.metric.dev.yml
 		docker-compose.logstash.dev.yml = docker-compose.logstash.dev.yml
+		docker-compose.metric.dev.yml = docker-compose.metric.dev.yml
 		docker-compose.service.dev.yml = docker-compose.service.dev.yml
 		Dockerfile.logstashinput.dev = Dockerfile.logstashinput.dev
 		Dockerfile.logstashoutput.dev = Dockerfile.logstashoutput.dev
 		Dockerfile.prometheus.dev = Dockerfile.prometheus.dev
 		configs\logstash_output\logstash.conf = configs\logstash_output\logstash.conf
 		prometheus.yml = prometheus.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reviewservice", "reviewservice\reviewservice.csproj", "{936AAC25-896F-4ADA-9F73-71B9743CD654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "reviewservice", "reviewservice\reviewservice.csproj", "{936AAC25-896F-4ADA-9F73-71B9743CD654}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharedmonitoring", "sharedmonitoring\sharedmonitoring.csproj", "{CC92ECE0-0846-43DE-813E-42D9E31B6FFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharedmonitoring", "sharedmonitoring\sharedmonitoring.csproj", "{CC92ECE0-0846-43DE-813E-42D9E31B6FFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +48,6 @@ Global
 		{B12C0650-802F-49EB-89E5-92700E8E75BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B12C0650-802F-49EB-89E5-92700E8E75BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B12C0650-802F-49EB-89E5-92700E8E75BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{877B53BF-C867-40C1-964C-2C51F75022D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{877B53BF-C867-40C1-964C-2C51F75022D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{877B53BF-C867-40C1-964C-2C51F75022D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{877B53BF-C867-40C1-964C-2C51F75022D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47AF55C2-D5A9-49C9-8F13-1A450BAB5444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47AF55C2-D5A9-49C9-8F13-1A450BAB5444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47AF55C2-D5A9-49C9-8F13-1A450BAB5444}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,7 +82,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B12C0650-802F-49EB-89E5-92700E8E75BC} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
-		{877B53BF-C867-40C1-964C-2C51F75022D5} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
 		{47AF55C2-D5A9-49C9-8F13-1A450BAB5444} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
 		{3AC483AF-194B-41FA-B80D-B0DA6FDECFCA} = {65849A7E-0D98-4CB7-A37D-4490BB65B0F3}
 		{43F63C83-AE86-4CD1-B7CA-EB541925E3D2} = {9268F3BC-6257-4509-BFD8-B7BFEAA2E1A5}

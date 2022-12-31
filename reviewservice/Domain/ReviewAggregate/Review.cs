@@ -16,6 +16,7 @@ namespace reviewservice.Domain.ReviewAggregate
 
         private Review(Guid UserId, Guid BookId, byte Rating, string Comment) : this()
         {
+            this.Id= Guid.NewGuid();
             this.UserId = Guard.Against.NullOrEmpty(UserId, "UserId could not be null");
             this.BookId = Guard.Against.NullOrEmpty(BookId, "BookId could not be null");
             this.Rating = Guard.Against.ByteNegative(Rating, "Rating could not be less than zero");

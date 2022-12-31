@@ -7,35 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Application\**" />
-    <Compile Remove="Controllers\**" />
-    <Compile Remove="Domain\ShelveAggregate\Interfaces\**" />
-    <Compile Remove="Domain\ShelveAggregate\Specs\**" />
-    <Compile Remove="Infrastructure\**" />
-    <Content Remove="Application\**" />
-    <Content Remove="Controllers\**" />
-    <Content Remove="Domain\ShelveAggregate\Interfaces\**" />
-    <Content Remove="Domain\ShelveAggregate\Specs\**" />
-    <Content Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Application\**" />
-    <EmbeddedResource Remove="Controllers\**" />
-    <EmbeddedResource Remove="Domain\ShelveAggregate\Interfaces\**" />
-    <EmbeddedResource Remove="Domain\ShelveAggregate\Specs\**" />
-    <EmbeddedResource Remove="Infrastructure\**" />
-    <None Remove="Application\**" />
-    <None Remove="Controllers\**" />
-    <None Remove="Domain\ShelveAggregate\Interfaces\**" />
-    <None Remove="Domain\ShelveAggregate\Specs\**" />
-    <None Remove="Infrastructure\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+    <PackageReference Include="Consul" Version="1.6.10.8" />
     <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0-rc.1" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0-rc.1" />
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.10" />
     <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.3" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.10" />
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc9.10" />
+    <PackageReference Include="prometheus-net" Version="8.0.0-pre-000347-e83cc87" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0-pre-000342-4d6812e" />
+    <PackageReference Include="prometheus-net.SystemMetrics" Version="2.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
@@ -73,7 +55,8 @@
     <None Remove="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\ShelveAggregate\" />
+    <Folder Include="Application\Shelve\Queries\" />
+    <Folder Include="Domain\ShelveAggregate\Specs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">
