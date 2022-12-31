@@ -10,10 +10,10 @@ namespace shelveservice.Application.Shelve.Commands
         public Guid UserId { get; set; }       
         public string Name { get; set; }
 
-        public class CreateReviewCommandHandler : IRequestHandler<CreateShelveCommand, IServiceResponse>
+        public class CreateShelveCommandHandler : IRequestHandler<CreateShelveCommand, IServiceResponse>
         {
             private readonly IUnitOfWork _unitOfWork;
-            public CreateReviewCommandHandler(IUnitOfWork unitOfWork)
+            public CreateShelveCommandHandler(IUnitOfWork unitOfWork)
             {
                 _unitOfWork = unitOfWork;
             }

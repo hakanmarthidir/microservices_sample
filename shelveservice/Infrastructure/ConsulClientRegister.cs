@@ -7,7 +7,7 @@ namespace shelveservice.Infrastructure
     {
         public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime, IConfiguration configuration)
         {
-            var serviceInfo = configuration.GetSection("CONSULSHELVESERVICEINFO").Get<ConsulReviewServiceInfo>();
+            var serviceInfo = configuration.GetSection("CONSULSHELVESERVICEINFO").Get<ConsulShelveServiceInfo>();
             var hostInfo = configuration.GetSection("CONSULHOSTINFO").Get<ConsulHostInfo>();
 
             var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{hostInfo.ConsulHost}:{hostInfo.ConsulPort}"));

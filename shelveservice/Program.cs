@@ -19,7 +19,7 @@ builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
-builder.Services.Configure<ConsulReviewServiceInfo>(builder.Configuration.GetSection("CONSULSHELVESERVICEINFO"));
+builder.Services.Configure<ConsulShelveServiceInfo>(builder.Configuration.GetSection("CONSULSHELVESERVICEINFO"));
 
 var dbConnection = Environment.GetEnvironmentVariable("SHELVE_DEFAULTCONNECTION");
 //var dbConnection = "Data Source=localhost;Initial Catalog=shelveservice;User Id=sa;Password=server2019;MultipleActiveResultSets=True;TrustServerCertificate=True";
@@ -36,7 +36,7 @@ builder.Services.AddSystemMetrics();
 
 
 builder.Services.AddHttpClient();
-builder.Services.AddJaegerOpenTelemetryTracing("ReviewService", "0.0.1");
+builder.Services.AddJaegerOpenTelemetryTracing("ShelveService", "0.0.1");
 
 
 var app = builder.Build();
