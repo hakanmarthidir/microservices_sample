@@ -1,5 +1,6 @@
 ﻿using System;
 using AutoMapper;
+using reviewservice.Application.Review.Dtos;
 
 namespace reviewservice.Application.Mappers
 {
@@ -7,7 +8,7 @@ namespace reviewservice.Application.Mappers
     {
         public AutoMappings()
         {
-            //CreateMap<Domain.ReviewAggregate.Review, ReviewDto>();          
+            CreateMap<Domain.ReviewAggregate.Review, ReviewBookDto>();            
         }
     }
 }

@@ -91,6 +91,17 @@ namespace sharedsecurity
             }
         }
 
+        public string GetClaimValueFromToken(string token, string claimType)
+        {
+            var claimDetail = this.GetTokenClaimPrincipal(token);
+            Guard.Against.Null(claimDetail, "token is not valid.");
+
+            var selectedClaim = claimDetail.Claims.FirstOrDefault(x => x.Type == claimType);
+            Guard.Against.Null(selectedClaim, "claim is not valid.");
+
+            return selectedClaim.Value;
+
+        }
     }
 }
 

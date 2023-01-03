@@ -8,6 +8,7 @@ namespace sharedsecurity
         string GenerateToken(Claim[] claims);
         string GenerateRefreshToken();
         ClaimsPrincipal GetTokenClaimPrincipal(string token);
+        string GetClaimValueFromToken(string token, string claimType);
     }
 }
 
