@@ -6,21 +6,6 @@ networks:
 
 services:
 
-  logstashoutput:
-    container_name: logstashoutput
-    hostname: logstashoutput
-    build: 
-      context: .
-      dockerfile: Dockerfile.logstashoutput.dev
-    ports:
-      - "5044:5044"
-    depends_on:
-      - rabbitmq
-    networks:
-      - microservice-network
-    environment:
-      - ELASTIC_CONTAINER=false
-
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -31,14 +16,14 @@ services:
     networks:
       - microservice-network
 
-  logstashinput:
-    container_name: logstashinput
-    hostname: logstashinput
+  logstash:
+    container_name: logstash
+    hostname: logstash
     build: 
       context: .
-      dockerfile: Dockerfile.logstashinput.dev
+      dockerfile: Dockerfile.logstash.dev
     ports:
-      - "5045:5045"
+      - "5044:5044"
     depends_on:
       - rabbitmq
       - elasticsearch

@@ -34,14 +34,14 @@ namespace reviewservice.Controllers
             ).ConfigureAwait(false));           
         }
 
-        [HttpGet("/{page}")]
+        [HttpGet("/{page}/{pagesize}")]
         [Authorize(Policy = "AuthorizedClient")]
-        public async Task<IActionResult> GetReviewedBooks([FromHeader] string authorization, int page, int pageSize)
+        public async Task<IActionResult> GetReviewedBooks([FromHeader] string authorization, int page, int pagesize)
         {
             //TODO: handle with middleware or action filter [FromHeader] string authorization
             return Ok(await this._mediator.Send(new ReviewedBookListQuery() { 
                 Page = page, 
-                PageSize=pageSize, 
+                PageSize=pagesize, 
                 Token= authorization 
             }).ConfigureAwait(false));
 

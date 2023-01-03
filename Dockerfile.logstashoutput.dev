@@ -1,3 +1,0 @@
-FROM docker.elastic.co/logstash/logstash:8.5.3
-RUN rm -f /usr/share/logstash/pipeline/logstash.conf
-ADD /configs/logstash_output/logstash.conf /usr/share/logstash/pipeline/
