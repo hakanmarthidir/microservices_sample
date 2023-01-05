@@ -42,6 +42,13 @@ namespace bookcatalogservice.Controllers
                 Name = model.BookName
             }).ConfigureAwait(false));
         }
+
+        [HttpPost("revieweddetails")]
+        public async Task<IActionResult> ReviewedDetails([FromBody] ReviewedBooksDetailDto model)
+        {
+            return Ok(model);
+        }
+
     }
 }
 

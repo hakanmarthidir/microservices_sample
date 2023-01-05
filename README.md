@@ -32,7 +32,7 @@ This microservices project was created to test some basic implementation princip
 ### Infrastructure
 - Metrics : Prometheus-Grafana
 - Tracing : OpenTelemetry, Jaeger
-- Centreralized Logging : ElasticSearch, LogStash, Kibana by SeriLog (Logtash output : Http -> RabbitMq, Logstash input : RabbitMq -> ElasticSearch)
+- Centreralized Logging : ElasticSearch, LogStash, Kibana by SeriLog (Logtash output : Http, Logstash input : ElasticSearch)
 - HealthChecks
 - Ocelot
 - Consul

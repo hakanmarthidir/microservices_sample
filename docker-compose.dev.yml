@@ -94,7 +94,6 @@ services:
       - consul
       - webapigateway
       - jaeger
-      - logstashoutput
     ports:
       - ${CATALOGSERVICE_PORT}:80
     environment:
