@@ -45,8 +45,13 @@ namespace bookcatalogservice.Controllers
 
         [HttpPost("revieweddetails")]
         public async Task<IActionResult> ReviewedDetails([FromBody] ReviewedBooksDetailDto model)
-        {
-            return Ok(model);
+        {            
+            return Ok(await this._mediator.Send(new GetAllReviewedBooksQuery()
+            {
+                Page = model.Page,
+                PageSize = model.PageSize,
+                ReviewedBookIdList = model.ReviewedBookIdLIst
+            }).ConfigureAwait(false));
         }
 
     }

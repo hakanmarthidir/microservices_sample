@@ -10,7 +10,6 @@ using sharedkernel.Interfaces;
 using sharedkernel.ServiceResponse;
 using sharedsecurity;
 using System.Text;
-using System.Text.Json;
 
 namespace reviewservice.Application.Review.Queries
 {
@@ -35,31 +34,30 @@ namespace reviewservice.Application.Review.Queries
                 _httpClientFactory = httpClientFactory;
             }
 
-            public async  Task<IServiceResponse<IList<ReviewBookDto>>> Handle(ReviewedBookListQuery request, CancellationToken cancellationToken)
+            public async Task<IServiceResponse<IList<ReviewBookDto>>> Handle(ReviewedBookListQuery request, CancellationToken cancellationToken)
             {
                 var userId = this._tokenService.GetClaimValueFromToken(request.Token.Split(" ")[1], "UId");
                 Guard.Against.NullOrEmpty(userId, message: "Claim is not valid");
 
-                var spec = new ReviewedBooksSpec(request.Page, request.PageSize, Guid.Parse(userId));
-
+                var spec = new ReviewedBooksSpec(request.Page, request.PageSize, Guid.Parse(userId.ToUpper()));                
                 var result = await this._unitOfWork.ReviewRepository.FindAsync(spec).ConfigureAwait(false);
 
-                foreach (var item in result)
+                var mappedList = this._mapper.Map<IList<ReviewBookDto>>(result);
+                var idList = mappedList.Select(x => x.BookId).ToList();
+
+                //getreviewedbookdetails from another microservice by using REST
+                var detailResult = await this.GetBookDetails(request.Token, idList, request.Page, request.PageSize).ConfigureAwait(false);
+
+                foreach (var item in mappedList)
                 {
-                    Console.WriteLine("Reviewed : " + item.UserId + " " + item.BookId);
+                    item.Detail = detailResult.FirstOrDefault(x => x.Id == item.BookId);
                 }
 
-                var mappedList = this._mapper.Map<IList<ReviewBookDto>>(result);
-
-                var idList = mappedList.Select(x => x.BookId).ToList();
-                var detailResult = await this.GetBookDetails(request.Token,idList).ConfigureAwait(false);
-                Console.WriteLine("Detail Count : " + detailResult.Count());
-                return ServiceResponse<IList<ReviewBookDto>>.Success(mappedList, "ReviewList");        
-            }            
-            public async Task<IEnumerable<ReviewBookDetail>> GetBookDetails(string token, List<Guid> bookIdList)
+                return ServiceResponse<IList<ReviewBookDto>>.Success(mappedList, "ReviewList");
+            }
+            public async Task<IList<ReviewBookDetail>> GetBookDetails(string token, List<Guid> bookIdList, int page, int pageSize)
             {
-                IEnumerable<ReviewBookDetail>? bookDetails = null;
-                var detailDto = new ReviewedBooksDetailDto() { ReviewedBookIdLIst = bookIdList };
+                var detailDto = new ReviewedBooksDetailDto() { ReviewedBookIdList = bookIdList, Page = page, PageSize = pageSize };
                 HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(detailDto), Encoding.UTF8, "application/json");
 
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://bookcatalogservice/api/v1/catalog/book/revieweddetails")
@@ -68,27 +66,22 @@ namespace reviewservice.Application.Review.Queries
                     {
                         { HeaderNames.Accept, "application/json" },
                         { HeaderNames.Authorization, token}
-                    }, 
+                    },
                     Content = httpContent
                 };
 
                 var httpClient = _httpClientFactory.CreateClient();
-                
                 var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
-                    using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-
-                    bookDetails = await System.Text.Json.JsonSerializer.DeserializeAsync<IEnumerable<ReviewBookDetail>>(contentStream);
-
-                    foreach (var detail in bookDetails)
-                    {
-                        Console.WriteLine("Reviewed Book : " + detail.BookName);
-                    }
+                    var reviewResponse = await httpResponseMessage.Content.ReadFromJsonAsync<ReviewResponse>();
+                    return reviewResponse.Data;
                 }
-
-                return bookDetails;
+                else
+                {
+                    return null;
+                }
             }
 
         }

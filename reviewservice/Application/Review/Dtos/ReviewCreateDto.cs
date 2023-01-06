@@ -6,5 +6,6 @@
         public Guid BookId { get; set; }
         public byte Rating { get; set; }
         public string Comment { get; set; }
+        public DateTime DateRead { get; set; }
     }
 }

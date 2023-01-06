@@ -14,18 +14,19 @@ namespace reviewservice.Domain.ReviewAggregate
 
         private Review() { }
 
-        private Review(Guid UserId, Guid BookId, byte Rating, string Comment) : this()
+        private Review(Guid UserId, Guid BookId, byte Rating, string Comment, DateTime DateRead) : this()
         {
             this.Id= Guid.NewGuid();
             this.UserId = Guard.Against.NullOrEmpty(UserId, "UserId could not be null");
             this.BookId = Guard.Against.NullOrEmpty(BookId, "BookId could not be null");
             this.Rating = Guard.Against.ByteNegative(Rating, "Rating could not be less than zero");
             this.Comment = Comment;
+            this.DateRead = DateRead;
         }
 
-        public static Review CreateReview(Guid UserId, Guid BookId, byte Rating, string Comment)
+        public static Review CreateReview(Guid UserId, Guid BookId, byte Rating, string Comment, DateTime DateRead)
         {
-            return new Review(UserId, BookId, Rating, Comment);
+            return new Review(UserId, BookId, Rating, Comment, DateRead);
         }
     }
 

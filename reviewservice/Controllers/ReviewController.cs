@@ -29,16 +29,20 @@ namespace reviewservice.Controllers
                 UserId = model.UserId,
                 BookId = model.BookId,
                 Rating = model.Rating,
-                Comment= model.Comment
+                Comment= model.Comment,
+                DateRead = model.DateRead
             }
             ).ConfigureAwait(false));           
         }
 
-        [HttpGet("/{page}/{pagesize}")]
+        [HttpGet()]
+        [Route("getreviewedbooks/{page}/{pagesize}")]
         [Authorize(Policy = "AuthorizedClient")]
-        public async Task<IActionResult> GetReviewedBooks([FromHeader] string authorization, int page, int pagesize)
+        public async Task<IActionResult> GetReviewedBooks(int page,  int pagesize)
         {
             //TODO: handle with middleware or action filter [FromHeader] string authorization
+            Request.Headers.TryGetValue("Authorization", out var authorization);
+
             return Ok(await this._mediator.Send(new ReviewedBookListQuery() { 
                 Page = page, 
                 PageSize=pagesize, 

@@ -8,7 +8,8 @@ namespace reviewservice.Application.Mappers
     {
         public AutoMappings()
         {
-            CreateMap<Domain.ReviewAggregate.Review, ReviewBookDto>();            
+            CreateMap<Domain.ReviewAggregate.Review, ReviewBookDto>();           
+            
         }
     }
 }

@@ -11,6 +11,7 @@ namespace reviewservice.Application.Review.Commands
         public Guid BookId { get; set; }
         public byte Rating { get; set; }
         public string Comment { get; set; }
+        public DateTime DateRead { get; set; }
 
         public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, IServiceResponse>
         {
@@ -23,7 +24,7 @@ namespace reviewservice.Application.Review.Commands
             public async Task<IServiceResponse> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
             {
                 
-                await this._unitOfWork.ReviewRepository.InsertAsync(Domain.ReviewAggregate.Review.CreateReview(request.UserId, request.BookId, request.Rating, request.Comment), cancellationToken).ConfigureAwait(false);
+                await this._unitOfWork.ReviewRepository.InsertAsync(Domain.ReviewAggregate.Review.CreateReview(request.UserId, request.BookId, request.Rating, request.Comment, request.DateRead), cancellationToken).ConfigureAwait(false);
                 await this._unitOfWork.SaveAsync(cancellationToken).ConfigureAwait(false);
 
                 return ServiceResponse.Success("Review was created successfully.");

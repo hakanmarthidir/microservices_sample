@@ -78,11 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Domain\" />
-    <Folder Include="Application\" />
-    <Folder Include="Application\Book\" />
     <Folder Include="Application\Book\Commands\" />
-    <Folder Include="Application\Book\Queries\" />
     <Folder Include="Application\Book\Dtos\" />
     <Folder Include="Application\Genre\" />
     <Folder Include="Application\Genre\Commands\" />
@@ -93,7 +89,6 @@
     <Folder Include="Application\Author\Queries\" />
     <Folder Include="Application\Author\Dtos\" />
     <Folder Include="Application\Mappers\" />
-    <Folder Include="Domain\BookAggregate\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sharedkernel\sharedkernel.csproj">

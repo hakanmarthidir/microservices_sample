@@ -14,10 +14,31 @@
 
     public class ReviewBookDetail
     {
-        public string BookName { get; set; }
-        public string AuthorName { get; set; }
-        public Guid AuthorId { get; set; }
-        public int GenreId { get; set; }
-        public string GenreName { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public int FirstPublishedDate { get; set; }
+        public ReviewBookGenreDetail Genre { get; set; }
+        public ReviewBookAuthorDetail Author { get; set; }
+    }
+
+    public class ReviewBookGenreDetail
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class ReviewBookAuthorDetail
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class ReviewResponse
+    {
+        public int ErrorCode { get; set; }
+        public int Status { get; set; }
+        public string Message { get; set; }
+        public IList<ReviewBookDetail> Data { get; set; }
+
     }
 }

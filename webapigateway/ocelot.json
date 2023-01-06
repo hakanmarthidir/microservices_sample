@@ -58,9 +58,40 @@
     {
       "UseServiceDiscovery": true,
       "ServiceName": "ReviewService",
-      "UpstreamPathTemplate": "/gateway/v1/review/{requestname}",
-      "UpstreamHttpMethod": [ "GET", "POST" ],
-      "DownstreamPathTemplate": "/api/v1/review/{requestname}",
+      "UpstreamPathTemplate": "/gateway/v1/review/{page}/{pagesize}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/api/v1/review/getreviewedbooks/{page}/{pagesize}",
+      "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "PeriodTimespan": 10,
+        "Limit": 10
+      },
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "HttpHandlerOptions": {
+        "UseTracing": true
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 5,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 2000
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": null,
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "ReviewService",
+      "UpstreamPathTemplate": "/gateway/v1/review",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/api/v1/review",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "RateLimitOptions": {
