@@ -8,6 +8,7 @@ using reviewservice.Application.Review.Queries;
 
 namespace reviewservice.Controllers
 {
+    [Authorize(Policy = "AuthorizedClient")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ReviewController : ControllerBase
@@ -20,13 +21,14 @@ namespace reviewservice.Controllers
             _mediator = mediator;
         }     
 
-        [HttpPost]
-        [Authorize(Policy = "AuthorizedClient")]
+        [HttpPost]        
         public async Task<IActionResult> Post([FromBody] ReviewCreateDto model)
         {
+            Request.Headers.TryGetValue("Authorization", out var authorization);
+
             return Ok(await this._mediator.Send(new CreateReviewCommand()
             {
-                UserId = model.UserId,
+                Token = authorization,
                 BookId = model.BookId,
                 Rating = model.Rating,
                 Comment= model.Comment,
@@ -36,8 +38,7 @@ namespace reviewservice.Controllers
         }
 
         [HttpGet()]
-        [Route("getreviewedbooks/{page}/{pagesize}")]
-        [Authorize(Policy = "AuthorizedClient")]
+        [Route("getreviewedbooks/{page}/{pagesize}")]       
         public async Task<IActionResult> GetReviewedBooks(int page,  int pagesize)
         {
             //TODO: handle with middleware or action filter [FromHeader] string authorization

@@ -39,7 +39,7 @@ namespace reviewservice.Application.Review.Queries
                 var userId = this._tokenService.GetClaimValueFromToken(request.Token.Split(" ")[1], "UId");
                 Guard.Against.NullOrEmpty(userId, message: "Claim is not valid");
 
-                var spec = new ReviewedBooksSpec(request.Page, request.PageSize, Guid.Parse(userId.ToUpper()));                
+                var spec = new ReviewedBooksSpec(request.Page, request.PageSize, Guid.Parse(userId));                
                 var result = await this._unitOfWork.ReviewRepository.FindAsync(spec).ConfigureAwait(false);
 
                 var mappedList = this._mapper.Map<IList<ReviewBookDto>>(result);
