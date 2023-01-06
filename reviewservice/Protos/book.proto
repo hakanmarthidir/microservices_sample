@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "reviewservice.Protos";
+
+
+package books;
+
+service BookCatalogDetailService
+{
+	rpc GetReviewedBookDetails(BookDetailRequest) returns (stream BookList);
+}
+
+message BookDetailRequest {
+	int32 page=1;
+	int32 pageSize=2;
+	repeated string bookIds=3;
+}
+
+message BookList
+{
+	repeated BookDetailResponse BookDetails=1;
+}
+
+
+message BookDetailResponse {
+	string id=1;
+    string name=2;
+    int32 firstPublishedDate=3;
+	int32 genreId=4;
+	string genreName=5;
+	string authorId=6;
+	string authorName=7;
+}
+

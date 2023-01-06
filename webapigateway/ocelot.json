@@ -58,9 +58,9 @@
     {
       "UseServiceDiscovery": true,
       "ServiceName": "ReviewService",
-      "UpstreamPathTemplate": "/gateway/v1/review/{page}/{pagesize}",
+      "UpstreamPathTemplate": "/gateway/v1/review/{subroute}/{page}/{pagesize}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/v1/review/reviewedbooks/{page}/{pagesize}",
+      "DownstreamPathTemplate": "/api/v1/review/{subroute}/{page}/{pagesize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "RateLimitOptions": {

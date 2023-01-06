@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0-rc.1" />
     <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0-rc.1" />
@@ -75,6 +76,7 @@
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <None Remove="Consul" />
     <None Remove="AspNetCore.HealthChecks.SqlServer" />
+    <None Remove="Protos\book.proto" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -96,5 +98,8 @@
     </ProjectReference>
     <ProjectReference Include="..\sharedmonitoring\sharedmonitoring.csproj" />
     <ProjectReference Include="..\sharedsecurity\sharedsecurity.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\book.proto" GrpcServices="Server" />
   </ItemGroup>
 </Project>

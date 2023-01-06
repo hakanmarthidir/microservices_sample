@@ -37,8 +37,7 @@ namespace reviewservice.Controllers
             ).ConfigureAwait(false));           
         }
 
-        [HttpGet("reviewedbooks/{page}/{pagesize}")]
-        //[Route("getreviewedbooks/{page}/{pagesize}")]       
+        [HttpGet("reviewedbooks/{page}/{pagesize}")]              
         public async Task<IActionResult> GetReviewedBooks(int page,  int pagesize)
         {
             //TODO: handle with middleware or action filter [FromHeader] string authorization
@@ -48,6 +47,19 @@ namespace reviewservice.Controllers
                 Page = page, 
                 PageSize=pagesize, 
                 Token= authorization 
+            }).ConfigureAwait(false));
+
+        }
+
+        [HttpGet("reviewedbooksgrpc/{page}/{pagesize}")]     
+        public async Task<IActionResult> GetReviewedBooksGrpc(int page, int pagesize)
+        {            
+            Request.Headers.TryGetValue("Authorization", out var authorization);
+            return Ok(await this._mediator.Send(new ReviewedBookListGrpcQuery()
+            {
+                Page = page,
+                PageSize = pagesize,
+                Token = authorization
             }).ConfigureAwait(false));
 
         }

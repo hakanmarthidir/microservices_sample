@@ -15,6 +15,15 @@ using sharedmonitoring;
 using sharedmonitoring.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseKestrel(option =>
+{
+    option.ListenAnyIP(80, config =>
+    {
+        config.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+    });
+});
+
 builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(typeof(identityservice.Application.Mappers.AutoMappings));
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());

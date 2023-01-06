@@ -8,6 +8,7 @@ using Prometheus.SystemMetrics;
 using reviewservice.Domain.ReviewAggregate.Interfaces;
 using reviewservice.Infrastructure;
 using reviewservice.Infrastructure.Persistence;
+using reviewservice.Protos;
 using sharedkernel;
 using sharedmonitoring;
 using sharedmonitoring.Middlewares;
@@ -15,6 +16,15 @@ using sharedsecurity;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseKestrel(option =>
+{
+    option.ListenAnyIP(80, config =>
+    {
+        config.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+    });   
+});
+
 builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -38,6 +48,7 @@ builder.Services.AddSystemMetrics();
 builder.Services.AddHttpClient();
 builder.Services.AddJaegerOpenTelemetryTracing("ReviewService", "0.0.1");
 
+builder.Services.AddGrpcClient<BookCatalogDetailService.BookCatalogDetailServiceClient>();
 
 var app = builder.Build();
 

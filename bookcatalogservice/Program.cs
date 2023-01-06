@@ -11,8 +11,23 @@ using Prometheus;
 using Prometheus.SystemMetrics;
 using sharedmonitoring;
 using sharedmonitoring.Middlewares;
+using bookcatalogservice.GrpcServices;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseKestrel(option =>
+{
+    option.ListenAnyIP(80, config =>
+    {
+        config.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+    });
+
+    option.ListenAnyIP(8181, config =>
+    {
+        config.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+    });
+});
+
 builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -38,6 +53,12 @@ builder.Services.AddSystemMetrics();
 builder.Services.AddHttpClient();
 builder.Services.AddJaegerOpenTelemetryTracing("BookCatalogService", "0.0.1");
 
+builder.Services.AddGrpc(options =>
+{
+    options.EnableDetailedErrors = true;
+    options.ResponseCompressionLevel = System.IO.Compression.CompressionLevel.Optimal;
+    options.MaxReceiveMessageSize = 1000000;
+});
 
 var app = builder.Build();
 
@@ -48,7 +69,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     DatabaseManagementService.MigrationInitialize(app);
 }
-
+app.MapGrpcService<GrpcBookService>();
 app.UseRouting();
 app.UseCors(x => x
    .AllowAnyOrigin()

@@ -27,9 +27,11 @@ This microservices project was created to test some basic implementation princip
 - dockerfile
 - efcore
 - net7
+- Communication with BookCatalogService via REST and gRPC sample
 
 
 ### Infrastructure
+- Docker
 - Metrics : Prometheus-Grafana
 - Tracing : OpenTelemetry, Jaeger
 - Centreralized Logging : ElasticSearch, LogStash, Kibana by SeriLog (Logtash output : Http, Logstash input : ElasticSearch)
