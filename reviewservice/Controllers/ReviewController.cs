@@ -37,8 +37,8 @@ namespace reviewservice.Controllers
             ).ConfigureAwait(false));           
         }
 
-        [HttpGet()]
-        [Route("getreviewedbooks/{page}/{pagesize}")]       
+        [HttpGet("reviewedbooks/{page}/{pagesize}")]
+        //[Route("getreviewedbooks/{page}/{pagesize}")]       
         public async Task<IActionResult> GetReviewedBooks(int page,  int pagesize)
         {
             //TODO: handle with middleware or action filter [FromHeader] string authorization

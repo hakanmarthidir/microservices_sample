@@ -60,7 +60,7 @@
       "ServiceName": "ReviewService",
       "UpstreamPathTemplate": "/gateway/v1/review/{page}/{pagesize}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/v1/review/getreviewedbooks/{page}/{pagesize}",
+      "DownstreamPathTemplate": "/api/v1/review/reviewedbooks/{page}/{pagesize}",
       "DownstreamScheme": "http",
       "RouteIsCaseSensitive": false,
       "RateLimitOptions": {

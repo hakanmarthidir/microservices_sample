@@ -1,4 +1,5 @@
 ﻿using Consul;
+using Microsoft.Extensions.Configuration;
 using sharedkernel;
 
 namespace reviewservice.Infrastructure
@@ -38,7 +39,7 @@ namespace reviewservice.Infrastructure
             });
 
             return app;
-        }
+        }       
     }
 }
 

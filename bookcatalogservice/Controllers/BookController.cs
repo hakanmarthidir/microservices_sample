@@ -43,7 +43,7 @@ namespace bookcatalogservice.Controllers
             }).ConfigureAwait(false));
         }
 
-        [HttpPost("revieweddetails")]
+        [HttpPost("reviewed")]
         public async Task<IActionResult> ReviewedDetails([FromBody] ReviewedBooksDetailDto model)
         {            
             return Ok(await this._mediator.Send(new GetAllReviewedBooksQuery()
