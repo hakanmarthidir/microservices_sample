@@ -34,9 +34,10 @@ This microservices project was created to test some basic implementation princip
 - Docker
 - Metrics : Prometheus-Grafana
 - Tracing : OpenTelemetry, Jaeger
-- Centreralized Logging : ElasticSearch, LogStash, Kibana by SeriLog (Logtash output : Http, Logstash input : ElasticSearch)
+- Centralized Logging : ElasticSearch, LogStash, Kibana by SeriLog (Logtash output : Http, Logstash input : ElasticSearch)
+- Centralized Configuration-Secret Management : Hashicorp Vault
 - HealthChecks
 - Ocelot
 - Consul
 - supported by dockercomposes
-- sharedkernel, sharedmonitoring or sharedsecurity might be nuget packages and you can publish them by using private registry. For instance : ProGet
+- sharedkernel, sharedmonitoring, sharedconfiguration or sharedsecurity might be nuget packages and you can publish them by using private registry. For instance : ProGet
