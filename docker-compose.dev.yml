@@ -2,6 +2,7 @@ version: '3.9'
 
 networks:
   microservice-network:
+    name : microservice-network
     driver: bridge
 
 services:
@@ -241,3 +242,17 @@ services:
     depends_on:
       - elasticsearch
     restart: 'unless-stopped'
+
+  vault:
+    image: vault
+    command: server -dev
+    hostname: vault
+    container_name: vault
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=IpeXKipZkiAwcsm5eE1h5UgX
+    networks:
+      - microservice-network

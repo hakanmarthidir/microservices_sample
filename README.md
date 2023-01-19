@@ -39,3 +39,4 @@ This microservices project was created to test some basic implementation princip
 - Ocelot
 - Consul
 - supported by dockercomposes
+- sharedkernel, sharedmonitoring or sharedsecurity might be nuget packages and you can publish them by using private registry. For instance : ProGet

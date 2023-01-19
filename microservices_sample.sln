@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "reviewservice", "reviewserv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharedmonitoring", "sharedmonitoring\sharedmonitoring.csproj", "{CC92ECE0-0846-43DE-813E-42D9E31B6FFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharedconfiguration", "sharedconfiguration\sharedconfiguration.csproj", "{1B6BBD5D-A0C9-4B7E-8482-95D1FA5CACE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{CC92ECE0-0846-43DE-813E-42D9E31B6FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC92ECE0-0846-43DE-813E-42D9E31B6FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC92ECE0-0846-43DE-813E-42D9E31B6FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6BBD5D-A0C9-4B7E-8482-95D1FA5CACE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6BBD5D-A0C9-4B7E-8482-95D1FA5CACE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6BBD5D-A0C9-4B7E-8482-95D1FA5CACE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6BBD5D-A0C9-4B7E-8482-95D1FA5CACE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

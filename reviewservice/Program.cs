@@ -17,6 +17,10 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// add Vault implementation (AddVault() extension is within sharedconfiguration)
+//it will retrieve the related secrets and bind to environment variables for related docker container. 
+// await builder.Configuration.AddVault();
+
 builder.WebHost.UseKestrel(option =>
 {
     option.ListenAnyIP(80, config =>
@@ -43,7 +47,6 @@ builder.Services.AddControllers();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
-
 
 builder.Services.AddHttpClient();
 builder.Services.AddJaegerOpenTelemetryTracing("ReviewService", "0.0.1");

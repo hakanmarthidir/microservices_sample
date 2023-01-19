@@ -2,6 +2,7 @@ version: '3.9'
 
 networks:
   microservice-network:
+    name : microservice-network
     driver: bridge
 
 services:
