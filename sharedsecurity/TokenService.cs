@@ -12,9 +12,16 @@ namespace sharedsecurity
     {
         private readonly JwtConfig _jwtConfig;
 
-        public TokenService(IOptionsMonitor<JwtConfig> jwtConfig)
+        public TokenService()
         {
-            this._jwtConfig = jwtConfig.CurrentValue;
+            this._jwtConfig = new JwtConfig()
+            {
+                Audience = Environment.GetEnvironmentVariable("JWTCONFIG_AUDIENCE"),
+                Issuer = Environment.GetEnvironmentVariable("JWTCONFIG_ISSUER"),
+                Duration = double.Parse(Environment.GetEnvironmentVariable("JWTCONFIG_DURATION")),
+                RefreshTokenDuration = double.Parse(Environment.GetEnvironmentVariable("JWTCONFIG_REFRESHTOKEN_DURATION")),
+                Secret = Environment.GetEnvironmentVariable("JWTCONFIG_SECRET")
+            };
         }
 
         public string GenerateToken(Claim[] claims)
@@ -52,14 +59,8 @@ namespace sharedsecurity
         {
             Guard.Against.NullOrWhiteSpace(token, nameof(token), "Token could not be null.");
 
-
-            var mySecret = this._jwtConfig.Secret;
-            var myIssuer = this._jwtConfig.Issuer;
-            var myAudience = this._jwtConfig.Audience;
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            var mySecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Secret));
-            var credentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature);
+            var mySecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Secret));           
 
             try
             {
@@ -70,8 +71,8 @@ namespace sharedsecurity
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidIssuer = myIssuer,
-                    ValidAudience = myAudience,
+                    ValidIssuer = this._jwtConfig.Issuer,
+                    ValidAudience = this._jwtConfig.Audience,
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 

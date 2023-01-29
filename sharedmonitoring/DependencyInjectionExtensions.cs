@@ -43,7 +43,7 @@ namespace sharedmonitoring
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.Debug()
-                .WriteTo.LogstashHttp("http://logstashoutput:5044")
+                //.WriteTo.LogstashHttp("http://logstashoutput:5044")
                 .CreateLogger();
             return logging.AddSerilog(logger);
         }

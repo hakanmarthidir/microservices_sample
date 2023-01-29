@@ -44,7 +44,7 @@ builder.Services.AddSingleton(typeof(ILogService<>), typeof(LogService<>));
 builder.Services.AddDbContext<ReviewContext>(options => options.UseSqlServer(dbConnection));
 
 builder.Services.AddControllers();
-builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddJwtAuthentication();
 builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
 

@@ -1,0 +1,15 @@
+﻿﻿apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: book-microservices-configmap
+  namespace: book-microservices
+data:
+  RUNNING_ENVIRONMENT: "Development"
+  JWTCONFIG_AUDIENCE: "http://"
+  JWTCONFIG_DURATION: "1"
+  JWTCONFIG_ISSUER: "http://"
+  JWTCONFIG_REFRESHTOKEN_DURATION: "24"
+  AUTHENTICATION_PROVIDERKEY: "Bearer"
+  JAEGER_SERVICE: "jaeger-service.book-microservices"
+  JAEGER_IDENTITIY_NAME: "IdentityService"
+  JAEGER_IDENTITIY_VERSION: "0.0.1"

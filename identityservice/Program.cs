@@ -28,8 +28,8 @@ builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(typeof(identityservice.Application.Mappers.AutoMappings));
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
-builder.Services.Configure<ConsulIdentityServiceInfo>(builder.Configuration.GetSection("CONSULIDENTITYSERVICEINFO"));
+//builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
+//builder.Services.Configure<ConsulIdentityServiceInfo>(builder.Configuration.GetSection("CONSULIDENTITYSERVICEINFO"));
 
 
 var dbConnection = Environment.GetEnvironmentVariable("IDENTITY_DEFAULTCONNECTION");
@@ -46,20 +46,20 @@ builder.Services.AddSingleton(typeof(ILogService<>), typeof(LogService<>));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddJwtAuthentication();
 builder.Services.AddHealthChecks();
 builder.Services.AddSystemMetrics();
 
 
 
 builder.Services.AddHttpClient();
-builder.Services.AddJaegerOpenTelemetryTracing("IdentityService", "0.0.1");
+builder.Services.AddJaegerOpenTelemetryTracing(Environment.GetEnvironmentVariable("JAEGER_IDENTITIY_NAME"), Environment.GetEnvironmentVariable("JAEGER_IDENTITIY_VERSION"), Environment.GetEnvironmentVariable("JAEGER_SERVICE"));
 
 var app = builder.Build();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions{ AllowCachingResponses = false});
 
-app.RegisterConsul(app.Lifetime, builder.Configuration);
+//app.RegisterConsul(app.Lifetime, builder.Configuration);
 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {

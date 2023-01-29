@@ -8,50 +8,43 @@ namespace sharedsecurity
 {
     public static class DependencyInjectionSecurityExtensions
     {
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
         {
-            services.Configure<JwtConfig>(configuration.GetSection("JWTCONFIG")); 
-            var jwtConfiguration = configuration.GetSection("JWTCONFIG").Get<JwtConfig>();
+            services.AddTransient<IHashService, HashService>();
+            services.AddTransient<ITokenService, TokenService>();
 
-            if (jwtConfiguration != null)
+            var authenticationProviderKey = Environment.GetEnvironmentVariable("AUTHENTICATION_PROVIDERKEY");
+            services.AddAuthentication(x =>
             {
-                
-                services.AddSingleton(jwtConfiguration);
-                services.AddTransient<IHashService, HashService>();
-                services.AddTransient<ITokenService, TokenService>();
-
-                var authenticationProviderKey = Environment.GetEnvironmentVariable("AUTHENTICATION_PROVIDERKEY");
-                services.AddAuthentication(x =>
+                x.DefaultAuthenticateScheme = authenticationProviderKey;
+                x.DefaultChallengeScheme = authenticationProviderKey;
+            }).AddJwtBearer(authenticationProviderKey, x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    x.DefaultAuthenticateScheme = authenticationProviderKey;
-                    x.DefaultChallengeScheme = authenticationProviderKey;
-                }).AddJwtBearer(authenticationProviderKey, x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = jwtConfiguration.Issuer,
-                        ValidateAudience = true,
-                        ValidAudience = jwtConfiguration.Audience,
-                        ValidateIssuerSigningKey = true,
-                        RequireExpirationTime = true,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfiguration.Secret))
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidIssuer = Environment.GetEnvironmentVariable("JWTCONFIG_ISSUER"),
+                    ValidateAudience = true,
+                    ValidAudience = Environment.GetEnvironmentVariable("JWTCONFIG_AUDIENCE"),
+                    ValidateIssuerSigningKey = true,
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTCONFIG_SECRET")))
+                };
+            });
 
-                services.AddAuthorization(
-                    options =>
-                    {
-                        options.AddPolicy("AuthorizedClient", policy => policy.RequireClaim(ClaimTypes.Role, "Client"));
-                        options.AddPolicy("AuthorizedAdmin", policy => policy.RequireClaim(ClaimTypes.Role, "Administrator"));
-                        options.AddPolicy("Authorized", policy => policy.RequireClaim(ClaimTypes.Role, "Client", "Administrator"));
-                    }
-                    );
-            }
+            services.AddAuthorization(
+                options =>
+                {
+                    options.AddPolicy("AuthorizedClient", policy => policy.RequireClaim(ClaimTypes.Role, "Client"));
+                    options.AddPolicy("AuthorizedAdmin", policy => policy.RequireClaim(ClaimTypes.Role, "Administrator"));
+                    options.AddPolicy("Authorized", policy => policy.RequireClaim(ClaimTypes.Role, "Client", "Administrator"));
+                }
+                );
+
             return services;
         }
 

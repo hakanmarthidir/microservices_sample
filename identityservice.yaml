@@ -1,0 +1,99 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: identityservice-deployment
+  namespace: book-microservices
+  labels:
+    app: identityservice
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identityservice
+  template:
+    metadata:
+      labels:
+        app: identityservice
+    spec:
+      containers:
+      - name: identityservice
+        image: docker.io/library/identityservice:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: RUNNING_ENVIRONMENT       
+        - name: JWTCONFIG_AUDIENCE
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_AUDIENCE
+        - name: JWTCONFIG_DURATION
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_DURATION
+        - name: JWTCONFIG_ISSUER
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_ISSUER
+        - name: JWTCONFIG_REFRESHTOKEN_DURATION
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_REFRESHTOKEN_DURATION
+
+        - name: JAEGER_IDENTITIY_NAME
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JAEGER_IDENTITIY_NAME
+        - name: JAEGER_IDENTITIY_VERSION
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JAEGER_IDENTITIY_VERSION
+        - name: JAEGER_SERVICE
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JAEGER_SERVICE
+        - name: AUTHENTICATION_PROVIDERKEY
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: AUTHENTICATION_PROVIDERKEY
+
+
+
+
+        - name: JWTCONFIG_SECRET
+          valueFrom:
+            secretKeyRef: 
+              name: book-microservices-secret
+              key: JWTCONFIG_SECRET
+        - name: IDENTITY_DEFAULTCONNECTION
+          valueFrom:
+            secretKeyRef: 
+              name: book-microservices-secret
+              key: IDENTITY_DEFAULTCONNECTION
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: book-microservices
+  name: identityservice
+spec:
+  selector:
+    app: identityservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
