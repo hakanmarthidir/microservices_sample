@@ -1,0 +1,11 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: my-envoy-gateway
+  namespace: book-microservices
+spec:
+  gatewayClassName: my-envoy-gateway-class
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
