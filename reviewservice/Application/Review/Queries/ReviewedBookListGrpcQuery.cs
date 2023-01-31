@@ -1,20 +1,14 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using Consul;
 using Grpc.Net.Client;
 using MediatR;
-using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
 using reviewservice.Application.Review.Dtos;
 using reviewservice.Domain.ReviewAggregate.Interfaces;
 using reviewservice.Domain.ReviewAggregate.Specs;
 using reviewservice.Protos;
-using sharedkernel;
 using sharedkernel.Interfaces;
 using sharedkernel.ServiceResponse;
 using sharedsecurity;
-using System.Text;
 
 namespace reviewservice.Application.Review.Queries
 {
@@ -30,13 +24,12 @@ namespace reviewservice.Application.Review.Queries
             private readonly IUnitOfWork _unitOfWork;
             private readonly ITokenService _tokenService;
             private readonly IMapper _mapper;           
-            private readonly ConsulHostInfo _consulConfig;
-            public ReviewedBookListGrpcQueryHandler(IUnitOfWork unitOfWork, ITokenService tokenService, IMapper mapper, IOptions<ConsulHostInfo> consulConfig)
+            
+            public ReviewedBookListGrpcQueryHandler(IUnitOfWork unitOfWork, ITokenService tokenService, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
                 _tokenService = tokenService;
-                _mapper = mapper;                
-                _consulConfig = consulConfig.Value;
+                _mapper = mapper;               
             }
 
             public async Task<IServiceResponse<IList<ReviewBookDto>>> Handle(ReviewedBookListGrpcQuery request, CancellationToken cancellationToken)
@@ -63,8 +56,8 @@ namespace reviewservice.Application.Review.Queries
             }
             private async Task<IList<ReviewBookDetail>> GetBookDetails(string token, List<Guid> bookIdList, int page, int pageSize)
             {
-                var bookServiceAddress = this.GetServiceAddress("BookCatalogService");
-
+                //var bookServiceAddress = this.GetServiceAddress("BookCatalogService");
+                var bookServiceAddress = new Uri($"http://bookcatalogservice.book-microservices:8181");
                 if (bookServiceAddress == null)
                     return null;
 
@@ -107,25 +100,25 @@ namespace reviewservice.Application.Review.Queries
                 return response;
 
             }
-            private Uri GetServiceAddress(string serviceName)
-            {
-                var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{_consulConfig.ConsulHost}:{_consulConfig.ConsulPort}"));
-                var services = consulClient.Agent.Services().Result.Response;
+            //private Uri GetServiceAddress(string serviceName)
+            //{
+            //    var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{_consulConfig.ConsulHost}:{_consulConfig.ConsulPort}"));
+            //    var services = consulClient.Agent.Services().Result.Response;
 
-                if (services.Any())
-                {
-                    foreach (var serviceAddress in services)
-                    {
-                        if (string.Equals(serviceAddress.Value.Service, serviceName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            return new Uri($"http://{serviceAddress.Value.Address}:8181");
-                        }
-                    }
-                }
+            //    if (services.Any())
+            //    {
+            //        foreach (var serviceAddress in services)
+            //        {
+            //            if (string.Equals(serviceAddress.Value.Service, serviceName, StringComparison.OrdinalIgnoreCase))
+            //            {
+            //                return new Uri($"http://{serviceAddress.Value.Address}:8181");
+            //            }
+            //        }
+            //    }
 
-                return null;
+            //    return null;
 
-            }
+            //}
         }
 
 

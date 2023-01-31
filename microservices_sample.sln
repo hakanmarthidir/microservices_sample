@@ -55,6 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{99
 	ProjectSection(SolutionItems) = preProject
 		identityservice.yaml = identityservice.yaml
 		bookcatalogservice.yaml = bookcatalogservice.yaml
+		reviewservice.yaml = reviewservice.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "envoy-gateway", "envoy-gateway", "{75391DBF-BE41-4AE7-AF38-44D8B6E579FB}"
