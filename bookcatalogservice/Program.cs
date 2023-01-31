@@ -31,8 +31,8 @@ builder.WebHost.UseKestrel(option =>
 builder.Logging.AddSerilogExtension();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
-builder.Services.Configure<ConsulCatalogServiceInfo>(builder.Configuration.GetSection("CONSULCATALOGSERVICEINFO"));
+//builder.Services.Configure<ConsulHostInfo>(builder.Configuration.GetSection("CONSULHOSTINFO"));
+//builder.Services.Configure<ConsulCatalogServiceInfo>(builder.Configuration.GetSection("CONSULCATALOGSERVICEINFO"));
 
 var dbConnection = Environment.GetEnvironmentVariable("CATALOG_DEFAULTCONNECTION");
 //var dbConnection = "Data Source=catalogsqlserver;Initial Catalog=bookservice;User Id=sa;Password=server2019!!;MultipleActiveResultSets=True;TrustServerCertificate=True";
@@ -51,7 +51,7 @@ builder.Services.AddSystemMetrics();
 
 
 builder.Services.AddHttpClient();
-builder.Services.AddJaegerOpenTelemetryTracing("BookCatalogService", "0.0.1");
+builder.Services.AddJaegerOpenTelemetryTracing(Environment.GetEnvironmentVariable("JAEGER_BOOKCATALOG_NAME"), Environment.GetEnvironmentVariable("JAEGER_BOOKCATALOG_VERSION"), Environment.GetEnvironmentVariable("JAEGER_SERVICE"));
 
 builder.Services.AddGrpc(options =>
 {
@@ -63,11 +63,12 @@ builder.Services.AddGrpc(options =>
 var app = builder.Build();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions { AllowCachingResponses = false });
-app.RegisterConsul(app.Lifetime, builder.Configuration);
+//app.RegisterConsul(app.Lifetime, builder.Configuration);
 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     DatabaseManagementService.MigrationInitialize(app);
+    Console.WriteLine("Migration completed.");
 }
 app.MapGrpcService<GrpcBookService>();
 app.UseRouting();

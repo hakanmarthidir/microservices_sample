@@ -13,3 +13,5 @@ data:
   JAEGER_SERVICE: "jaeger-service.book-microservices"
   JAEGER_IDENTITIY_NAME: "IdentityService"
   JAEGER_IDENTITIY_VERSION: "0.0.1"
+  JAEGER_BOOKCATALOG_NAME: "BookCatalogService"
+  JAEGER_BOOKCATALOG_VERSION: "0.0.1"

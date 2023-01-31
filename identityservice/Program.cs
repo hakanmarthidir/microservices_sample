@@ -34,6 +34,7 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var dbConnection = Environment.GetEnvironmentVariable("IDENTITY_DEFAULTCONNECTION");
 //var dbConnection = "Data Source=localhost;Initial Catalog=identityservice;User Id=sa;Password=server2019;MultipleActiveResultSets=True;TrustServerCertificate=True";
+//Data Source=mssql-service.book-microservices;Initial Catalog=identityservice;User Id=sa;Password=server2019!!;MultipleActiveResultSets=True;TrustServerCertificate=True
 
 builder.Services.AddDbContext<IdentityContext>(opt => opt.UseSqlServer(dbConnection));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -64,6 +65,7 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions{ AllowCachingResponses = 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     DatabaseManagementService.MigrationInitialize(app);
+    Console.WriteLine("Migration completed.");
 }
 
 app.UseRouting();

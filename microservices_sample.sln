@@ -54,6 +54,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{99425B09-7A4D-4EA2-AAD5-05E5897DCDEC}"
 	ProjectSection(SolutionItems) = preProject
 		identityservice.yaml = identityservice.yaml
+		bookcatalogservice.yaml = bookcatalogservice.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "envoy-gateway", "envoy-gateway", "{75391DBF-BE41-4AE7-AF38-44D8B6E579FB}"
+	ProjectSection(SolutionItems) = preProject
+		gateway-class.yaml = gateway-class.yaml
+		gateway-api.yaml = gateway-api.yaml
+		route-identity.yaml = route-identity.yaml
 	EndProjectSection
 EndProject
 Global
@@ -106,6 +114,7 @@ Global
 		{91F74912-A4D3-4FE4-AF6E-8EC647EBC994} = {226FE489-3229-444E-ABE6-0A8BB4EFCBED}
 		{96DF9D42-A40C-4DA7-B7C1-EEEA0147AA76} = {226FE489-3229-444E-ABE6-0A8BB4EFCBED}
 		{99425B09-7A4D-4EA2-AAD5-05E5897DCDEC} = {226FE489-3229-444E-ABE6-0A8BB4EFCBED}
+		{75391DBF-BE41-4AE7-AF38-44D8B6E579FB} = {226FE489-3229-444E-ABE6-0A8BB4EFCBED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8ED4CF56-5779-44DF-AF9E-A78C907EDF55}

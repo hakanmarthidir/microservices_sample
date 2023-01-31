@@ -1,0 +1,101 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: bookcatalogservice-deployment
+  namespace: book-microservices
+  labels:
+    app: bookcatalogservice
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookcatalogservice
+  template:
+    metadata:
+      labels:
+        app: bookcatalogservice
+    spec:
+      containers:
+      - name: bookcatalogservice
+        image: docker.io/library/bookcatalogservice:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: RUNNING_ENVIRONMENT       
+        - name: JWTCONFIG_AUDIENCE
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_AUDIENCE
+        - name: JWTCONFIG_DURATION
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_DURATION
+        - name: JWTCONFIG_ISSUER
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_ISSUER
+        - name: JWTCONFIG_REFRESHTOKEN_DURATION
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JWTCONFIG_REFRESHTOKEN_DURATION
+
+        - name: JAEGER_BOOKCATALOG_NAME
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JAEGER_BOOKCATALOG_NAME
+        - name: JAEGER_BOOKCATALOG_VERSION
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JAEGER_BOOKCATALOG_VERSION
+        - name: JAEGER_SERVICE
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: JAEGER_SERVICE
+        - name: AUTHENTICATION_PROVIDERKEY
+          valueFrom:
+            configMapKeyRef: 
+              name: book-microservices-configmap
+              key: AUTHENTICATION_PROVIDERKEY
+
+        - name: JWTCONFIG_SECRET
+          valueFrom:
+            secretKeyRef: 
+              name: book-microservices-secret
+              key: JWTCONFIG_SECRET
+        - name: CATALOG_DEFAULTCONNECTION
+          valueFrom:
+            secretKeyRef: 
+              name: book-microservices-secret
+              key: CATALOG_DEFAULTCONNECTION
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: book-microservices
+  name: bookcatalogservice
+spec:
+  selector:
+    app: bookcatalogservice
+  ports:
+    - name: tcp 
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: grpc
+      protocol: UDP
+      port: 8181
+      targetPort: 8181
